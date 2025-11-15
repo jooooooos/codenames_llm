@@ -1,6 +1,66 @@
 # prompts.py
 
-CODEMASTER_SYSTEM_PROMPT = """You are playing as the Codemaster in Codenames. Your role is to give clues that help your team guess specific words while avoiding opponent's words, neutral words, and the assassin word.
+def format_game_history(past_turns: list) -> str:
+    """
+    Format game history with progressive detail reduction:
+    - Recent turns (last 3): Full details with result labels
+      Example: "Turn 10: Clue 'OCEAN 2' → WAVE (team word), TIDE (neutral)"
+
+    - Medium-age turns (4-7 back): Abbreviated results using symbols
+      Example: "Turn 6: 'SPORT 2' → BALL ✓, FIELD ✓, STADIUM ✗"
+      (✓ = team word, ✗ = wrong)
+
+    - Oldest turns (8+ back): Only correct guesses shown
+      Example: "T3: 'METAL 2' → GOLD, SILVER"
+
+    This preserves what was guessed and what worked while reducing token count.
+    """
+    if not past_turns:
+        return "No turns played yet"
+
+    history_lines = []
+    total_turns = len(past_turns)
+
+    for i, turn in enumerate(past_turns):
+        turns_from_end = total_turns - i
+
+        if turns_from_end <= 3:
+            # Recent turns: Full details with result labels
+            history_lines.append(
+                f"Turn {turn['turn_number']}: "
+                f"Clue '{turn['clue_word']} {turn['clue_number']}' → "
+                f"{', '.join([f'{g} ({r})' for g, r in zip(turn['guesses'], turn['results'])])}"
+            )
+        elif turns_from_end <= 7:
+            # Medium-age turns: Use symbols to compress results
+            # ✓ = team word, ✗ = wrong (neutral/opponent/assassin)
+            guess_symbols = []
+            for guess, result in zip(turn['guesses'], turn['results']):
+                symbol = '✓' if result == 'team word' else '✗'
+                guess_symbols.append(f"{guess} {symbol}")
+
+            history_lines.append(
+                f"Turn {turn['turn_number']}: '{turn['clue_word']} {turn['clue_number']}' → "
+                f"{', '.join(guess_symbols)}"
+            )
+        else:
+            # Oldest turns: Only show correct guesses (what actually worked)
+            correct_guesses = [g for g, r in zip(turn['guesses'], turn['results'])
+                             if r == 'team word']
+            if correct_guesses:
+                history_lines.append(
+                    f"T{turn['turn_number']}: '{turn['clue_word']} {turn['clue_number']}' → "
+                    f"{', '.join(correct_guesses)}"
+                )
+            else:
+                # If no correct guesses, still show the clue was given but failed
+                history_lines.append(
+                    f"T{turn['turn_number']}: '{turn['clue_word']} {turn['clue_number']}' → (none correct)"
+                )
+
+    return '\n'.join(history_lines)
+
+CODEMASTER_SYSTEM_PROMPT = """You are playing as the Codemaster in Codenames. Your role is to give clues that help your team guess specific words while avoiding neutral words and the assassin word.
 
 ---
 **CRITICAL RULES:**
@@ -17,31 +77,25 @@ Your **ENTIRE** response **MUST** be a single JSON object contained within markd
 Example format:
 ```json
 {
-  "clue": "your single word clue that is NOT one of the words on the board",
-  "number": number_of_words_related_to_clue,
-  "reasoning": "brief internal reasoning for your choice "
+  "reasoning": "brief internal reasoning for your choice",
+  "clue": "your single word clue that is NOT one of the words on the board",
+  "number": number_of_words_related_to_clue
 }"""
 
-def get_codemaster_prompt(team: str, team_words: list, neutral_words: list, 
-                         opponent_words: list, assassin: str, game_state: dict) -> str:
-    # Format past guesses into a readable history
-    guess_history = []
-    for turn in game_state["past_turns"]:
-        guess_history.append(
-            f"Turn {turn['turn_number']} - {turn['team']}: "
-            f"Clue '{turn['clue_word']} {turn['clue_number']}' → "
-            f"Guesses: {', '.join([f'{g} ({r})' for g, r in zip(turn['guesses'], turn['results'])])}"
-        )
+def get_codemaster_prompt(team: str, team_words: list, neutral_words: list,
+                         avoid_words: list, assassin: str, game_state: dict) -> str:
+    # Use two-tier history formatting for token efficiency
+    guess_history = format_game_history(game_state["past_turns"])
 
     return f"""You are the Codemaster for {team}. Here is the current game state:
 
 Your team's remaining words to guess: {', '.join(team_words)}
-Opponent's words (avoid these): {', '.join(opponent_words)}
+Other words to avoid: {', '.join(avoid_words)}
 Neutral words (avoid these): {', '.join(neutral_words)}
 Assassin word (CRITICAL to avoid): {assassin}
 
 Game History:
-{chr(10).join(guess_history) if guess_history else "No turns played yet"}
+{guess_history}
 
 Your team has {len(team_words)} words left to guess.
 **CRITICAL MANDATORY RESPONSE FORMAT:**
@@ -63,21 +117,15 @@ Your **ENTIRE** response **MUST** be a single JSON object contained within markd
 Example format:
 ```json
 {
-  "guess": "the word you choose (must be a word on the board)",
-  "reasoning": "reasoning explaining your choice"
+  "reasoning": "reasoning explaining your choice",
+  "guess": "the word you choose (must be a word on the board)"
 }
 """
 
 def get_guesser_prompt(team: str, board: list, clue: str, number: int, game_state: dict) -> str:
-    # Format past guesses into a readable history
-    guess_history = []
-    for turn in game_state["past_turns"]:
-        guess_history.append(
-            f"Turn {turn['turn_number']} - {turn['team']}: "
-            f"Clue '{turn['clue_word']} {turn['clue_number']}' → "
-            f"Guesses: {', '.join([f'{g} ({r})' for g, r in zip(turn['guesses'], turn['results'])])}"
-        )
-    
+    # Use two-tier history formatting for token efficiency
+    guess_history = format_game_history(game_state["past_turns"])
+
     # Get already guessed words (confirmed role)
     guessed_team_words = [word for turn in game_state["past_turns"] 
                          if turn["team"] == team 
@@ -93,7 +141,7 @@ Your Codemaster's clue is: {clue} {number}
 This means there are {number} words on the board related to '{clue}'
 
 Game History:
-{chr(10).join(guess_history) if guess_history else "No turns played yet"}
+{guess_history}
 
 Your team has found these words so far: {', '.join(guessed_team_words)}
 

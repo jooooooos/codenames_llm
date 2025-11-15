@@ -17,8 +17,9 @@ from prompts import (
 class LLMAgent:
     def __init__(self, model_config: Dict, llm_instance: Optional[Any] = None):
         """Initialize an LLM agent with specific configuration"""
+        self.model_config = model_config  # Store config for later use
         if llm_instance is not None:
-            self.llm = llm_instance 
+            self.llm = llm_instance
         else:
             # Fallback/Original behavior: load the model from config
             self.llm = create_llm(model_config)
@@ -27,8 +28,14 @@ class LLMAgent:
     def initialize_role(self, role: str):
         """Set the role for this LLM agent"""
         self.role = role
-        self.system_prompt = (CODEMASTER_SYSTEM_PROMPT if role == 'codemaster' 
-                            else GUESSER_SYSTEM_PROMPT)
+        base_prompt = (CODEMASTER_SYSTEM_PROMPT if role == 'codemaster'
+                      else GUESSER_SYSTEM_PROMPT)
+
+        # Add disable reasoning instruction if configured
+        if self.model_config.get("disable_reasoning", False):
+            base_prompt += "\n\nIMPORTANT: Output ONLY valid JSON. Do not use <think> tags, reasoning blocks, or explanations. Provide only the JSON response."
+
+        self.system_prompt = base_prompt
 
     def _make_request(self, messages: List[Dict], max_tokens: int) -> str:
         """Make an API request with retries"""
@@ -47,11 +54,11 @@ class LLMAgent:
                 print(f"API Error: {str(e)}. Retrying in {wait_time}s...")
                 time.sleep(wait_time)
 
-    def give_clue(self, 
+    def give_clue(self,
                   team: str,
-                  team_words: List[str], 
+                  team_words: List[str],
                   neutral_words: List[str],
-                  opponent_words: List[str],
+                  avoid_words: List[str],
                   assassin: str,
                   game_state: Dict) -> Dict:
         """Generate a clue as the Codemaster (JSON output)"""
@@ -62,7 +69,7 @@ class LLMAgent:
             team=team,
             team_words=team_words,
             neutral_words=neutral_words,
-            opponent_words=opponent_words,
+            avoid_words=avoid_words,
             assassin=assassin,
             game_state=game_state
         )
@@ -72,8 +79,11 @@ class LLMAgent:
             {"role": "user", "content": prompt}
         ]
 
-        raw = self._make_request(messages, max_tokens=200)
-        all_board_words = {word.upper() for word in team_words + neutral_words + opponent_words + [assassin]}
+        # Use configurable max_tokens, default to 200 for codemaster
+        max_tokens = self.model_config.get("max_tokens", 200)
+        raw = self._make_request(messages, max_tokens=max_tokens)
+
+        all_board_words = {word.upper() for word in team_words + neutral_words + avoid_words + [assassin]}
         print("codemaster raw output: " + raw)
         try:
             json_match = None
@@ -143,19 +153,37 @@ class LLMAgent:
             {"role": "user", "content": prompt}
         ]
 
-        raw = self._make_request(messages, max_tokens=100)
+        # Use configurable max_tokens, default to 300 for guesser
+        max_tokens = self.model_config.get("max_tokens", 300)
+        raw = self._make_request(messages, max_tokens=max_tokens)
+
         print("guesser raw output: " + raw)
         available_words_upper = {word.upper() for word in available_words}
         try:
-            # 🚨 NEW JSON extraction: Look for the content between ```json and ```
+            json_match = None
+
+            # 1. Check 1 (Most likely to succeed): Find content inside ```json{...}```
             json_match = re.search(r"```json\s*(\{.*?})\s*```", raw, re.DOTALL)
 
             if not json_match:
-                        raise ValueError(f"No valid JSON code block found in guesser output: {repr(raw)}")
+                # 2. Check 2: Find content inside ```{...}``` (missing 'json' tag)
+                json_match = re.search(r"```\s*(\{.*?})\s*```", raw, re.DOTALL)
 
-            # Extract and clean the JSON content (group 1 contains the {...} structure)
-            extracted_json = json_match.group(1).strip()
-            
+            if not json_match:
+                # 3. Check 3 (Fallback): Find the first raw JSON object, ignoring all surrounding noise
+                json_match = re.search(r"(\{.*?})", raw, re.DOTALL)
+
+                if not json_match:
+                    raise ValueError(f"No valid JSON code block found in guesser output: {repr(raw)}")
+
+            # --- JSON Extraction ---
+            # If groups > 0, we matched a code block (use group(1) for the content)
+            # Otherwise, use group(0) for the raw JSON fallback
+            if len(json_match.groups()) > 0:
+                extracted_json = json_match.group(1).strip()
+            else:
+                extracted_json = json_match.group(0).strip()
+
             # CRITICAL: Remove non-breaking spaces (\xa0) that models sometimes insert
             cleaned_json = extracted_json.replace(u"\xa0", " ")
             data = json.loads(cleaned_json)

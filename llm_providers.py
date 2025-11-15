@@ -2,7 +2,14 @@
 
 from abc import ABC, abstractmethod
 import time
-from typing import Dict, List, Optional
+import re
+from typing import Dict, List, Optional, Any
+
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+import torch
+from transformers import StoppingCriteria, StoppingCriteriaList
+
+
 # import openai
 # import google.generativeai as genai
 # from anthropic import Anthropic
@@ -124,11 +131,6 @@ class ClaudeLLM(BaseLLM):
             temperature=self.temperature
         )
         return response.content[0].text.strip()
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-import torch
-from transformers import StoppingCriteria, StoppingCriteriaList
-
-from typing import List, Any # Ensure Any is imported if used elsewhere
 
 class StopAfterSequence(StoppingCriteria):
     """Stops generation when any of the provided sequences is found."""
@@ -150,12 +152,26 @@ class StopAfterSequence(StoppingCriteria):
             if input_ids[0][-len(stop_id):].tolist() == stop_id.tolist():
                 return True
         return False
+    
 class LocalHFLLM(BaseLLM):
-    """Generic local Hugging Face LLM."""
+    """Generic local Hugging Face LLM with support for different model families."""
     def __init__(self, config: Dict):
         super().__init__(config)
         model_name = config.get("model_name", "meta-llama/Llama-2-7b-chat-hf")  # default LLaMA
+        self.model_name = model_name
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+        # Detect model family for potential fallback handling
+        model_lower = model_name.lower()
+        if "llama" in model_lower:
+            self.model_family = "llama"
+        elif "qwen" in model_lower:
+            self.model_family = "qwen"
+        elif "mistral" in model_lower:
+            self.model_family = "mistral"
+        else:
+            self.model_family = "generic"
+
         if config.get("load_in_4bit", False):
             # Configuration for 4-bit loading
             bnb_config = BitsAndBytesConfig(
@@ -167,7 +183,7 @@ class LocalHFLLM(BaseLLM):
             bnb_config = None
         self.model = AutoModelForCausalLM.from_pretrained(
             model_name,
-            torch_dtype=torch.float16,
+            dtype=torch.float16,
             device_map="auto",
             quantization_config=bnb_config
         )
@@ -189,9 +205,33 @@ class LocalHFLLM(BaseLLM):
 
         text = self.tokenizer.decode(outputs[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
 
+        # For Qwen models, strip <think> tags after generation instead of using stopping criteria
+        if self.model_family == "qwen":
+            # Remove complete think blocks
+            text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
+            # Remove incomplete think blocks (if generation stopped mid-think)
+            text = re.sub(r'<think>.*', '', text, flags=re.DOTALL)
+            text = text.strip()
+
         return text.strip()
 
     def _convert_messages(self, messages: List[Dict]) -> str:
+        """Convert messages to proper chat format using tokenizer's chat template."""
+        # Try to use the tokenizer's built-in chat template if available
+        if hasattr(self.tokenizer, 'chat_template') and self.tokenizer.chat_template is not None:
+            try:
+                # Use the model's native chat template
+                # add_generation_prompt=True adds the assistant prefix for generation
+                prompt = self.tokenizer.apply_chat_template(
+                    messages,
+                    tokenize=False,
+                    add_generation_prompt=True
+                )
+                return prompt
+            except Exception as e:
+                print(f"Warning: Failed to use chat template, falling back to manual formatting: {e}")
+
+        # Fallback: Manual formatting for models without chat templates
         prompt = ""
         for msg in messages:
             role, content = msg["role"], msg["content"]

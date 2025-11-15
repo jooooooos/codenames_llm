@@ -3,12 +3,13 @@
 import os
 from dotenv import load_dotenv
 from benchmark import CodeNamesBenchmark
-import json
+from llm_providers import create_llm
+import llm_agent
 
 def main():
     # Load environment variables
     load_dotenv()
-    
+
     # Model configurations
     model_configs = {
         "gpt4": {
@@ -34,39 +35,78 @@ def main():
             "model_name": "claude-3-opus-20240229",
             "api_key": os.getenv("ANTHROPIC_API_KEY"),
             "temperature": 0.7
+        },
+        # Local HuggingFace models
+        "llama31": {
+            "type": "local_hf",
+            "model_name": "meta-llama/Llama-3.1-8B-Instruct",
+            "temperature": 0.7,
+            # "load_in_4bit": True
+        },
+        "qwen3": {
+            "type": "local_hf",
+            "model_name": "Qwen/Qwen3-8B",
+            "temperature": 0.7,
+            "max_tokens": 2048,  # Higher for Qwen's reasoning mode
+            "disable_reasoning": True,  # Disable <think> tags
+            # "load_in_4bit": True
+        },
+        "mistral": {
+            "type": "local_hf",
+            "model_name": "mistralai/Mistral-7B-Instruct-v0.3",
+            "temperature": 0.7,
+            # "load_in_4bit": True
         }
     }
 
     # Initialize benchmark
     benchmark = CodeNamesBenchmark(log_dir="game_logs")
-    
-    # Choose which models to play against each other
-    team_a = "gpt4"
-    team_b = "gemini"
-    
+
+    # Choose which model to use for collaborative game
+    model_choice = "llama31"  # Change this to test different models
+
     try:
-        print(f"\n=== Starting 2v2 Match ===")
-        print(f"Team A ({team_a}): Codemaster + Guesser")
-        print(f"Team B ({team_b}): Codemaster + Guesser")
-        
-        metrics = benchmark.run_matchup(
-            team_a_config=model_configs[team_a],
-            team_b_config=model_configs[team_b],
-            num_games=3
+        print(f"\n=== Starting Collaborative Codenames ===")
+        print(f"Model: {model_configs[model_choice]['model_name']}")
+        print(f"Mode: Codemaster + Guesser vs. Board")
+        print(f"Games: 3\n")
+
+        # Get the model config
+        config = model_configs[model_choice]
+
+        # Create shared LLM instance for both agents
+        shared_llm = create_llm(config)
+
+        # Create codemaster and guesser agents
+        codemaster = llm_agent.LLMAgent(model_config=config, llm_instance=shared_llm)
+        codemaster.initialize_role('codemaster')
+
+        guesser = llm_agent.LLMAgent(model_config=config, llm_instance=shared_llm)
+        guesser.initialize_role('guesser')
+
+        # Run collaborative games
+        results = benchmark.run_collab_matchup(
+            team_config=config,
+            num_games=3,
+            codemaster=codemaster,
+            guesser=guesser
         )
 
         # Print results
-        print("\n=== Match Results ===")
-        for team, stats in metrics.items():
-            print(f"\n{team.upper()}:")
-            print(f"Wins: {stats['wins']}/{stats['games_played']}")
-            print(f"Win Rate: {stats['win_rate']:.2%}")
-            print(f"Correct guesses: {stats['total_correct_guesses']}")
-            print(f"Incorrect guesses: {stats['total_incorrect_guesses']}")
-            print(f"Average words per clue: {stats['average_words_per_clue']:.2f}")
+        print("\n=== Game Results ===")
+        print(f"Model: {results['model']}")
+        print(f"Games played: {results['games_played']}")
+        print(f"Wins: {results['wins']}")
+        print(f"Win rate: {results['win_rate']:.1%}")
+        print(f"Average turns per game: {results['average_turns']:.1f}")
+        print(f"Total correct guesses: {results['total_correct_guesses']}")
+        print(f"Total incorrect guesses: {results['total_incorrect_guesses']}")
+        if results['total_correct_guesses'] > 0:
+            accuracy = results['total_correct_guesses'] / (results['total_correct_guesses'] + results['total_incorrect_guesses'])
+            print(f"Guess accuracy: {accuracy:.1%}")
 
     except Exception as e:
-        print(f"Match failed: {e}")
+        print(f"Game failed: {e}")
         raise e
 
 if __name__ == "__main__":

@@ -1,0 +1,7 @@
+vllm
+bitsandbytes
+python-dotenv
+transformers
+accelerate
+huggingface_hub
+notebook

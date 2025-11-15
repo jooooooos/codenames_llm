@@ -20,12 +20,11 @@ class TurnLog:
 @dataclass
 class GameLog:
     game_id: int
-    team_a_model: str
-    team_b_model: str
+    model_name: str
     start_time: float
     initial_board: List[str]
-    team_a_words: List[str]
-    team_b_words: List[str]
+    team_words: List[str]
+    other_words: List[str]  # Neutral words + (empty opponent list for compatibility)
     neutral_words: List[str]
     assassin: str
     turns: List[TurnLog]
@@ -52,33 +51,30 @@ class GameLogger:
         # Current game state
         self.current_game: Optional[GameLog] = None
         
-    def start_game(self, 
+    def start_game(self,
                   game_id: int,
-                  team_a_model: str,
-                  team_b_model: str,
+                  model_name: str,
                   initial_board: List[str],
-                  team_a_words: List[str],
-                  team_b_words: List[str],
+                  team_words: List[str],
                   neutral_words: List[str],
                   assassin: str):
-        """Start logging a new game"""
+        """Start logging a new collaborative game"""
         self.current_game = GameLog(
             game_id=game_id,
-            team_a_model=team_a_model,
-            team_b_model=team_b_model,
+            model_name=model_name,
             start_time=time.time(),
             initial_board=initial_board,
-            team_a_words=team_a_words.copy(),
-            team_b_words=team_b_words.copy(),
+            team_words=team_words.copy(),
+            other_words=neutral_words.copy(),  # For collaborative mode, other words are just neutral
             neutral_words=neutral_words.copy(),
             assassin=assassin,
             turns=[]
         )
-        
-        self.logger.info(f"Starting game {game_id}: {team_a_model} vs {team_b_model}")
+
+        self.logger.info(f"Starting collaborative game {game_id}: {model_name}")
         self.logger.info(f"Initial board: {', '.join(initial_board)}")
-        self.logger.info(f"Team A words: {', '.join(team_a_words)}")
-        self.logger.info(f"Team B words: {', '.join(team_b_words)}")
+        self.logger.info(f"Team words: {', '.join(team_words)}")
+        self.logger.info(f"Neutral words: {', '.join(neutral_words)}")
         self.logger.info(f"Assassin word: {assassin}")
 
     def log_turn(self,
@@ -140,21 +136,20 @@ class GameLogger:
         game_log_path = self.log_dir / f"game_{game_id}.json"
         if not game_log_path.exists():
             raise ValueError(f"No log found for game {game_id}")
-            
+
         with open(game_log_path, 'r') as f:
             game_data = json.load(f)
-            
+
         total_turns = len(game_data['turns'])
-        
+
         return {
             'game_id': game_id,
-            'team_a_model': game_data['team_a_model'],
-            'team_b_model': game_data['team_b_model'],
+            'model_name': game_data['model_name'],
             'winner': game_data['winner'],
             'total_turns': total_turns,
             'game_duration': game_data['end_time'] - game_data['start_time'],
             'clues_given': [
-                (turn['clue_word'], turn['clue_number']) 
+                (turn['clue_word'], turn['clue_number'])
                 for turn in game_data['turns']
             ],
             'guesses_made': sum(len(turn['guesses']) for turn in game_data['turns']),
