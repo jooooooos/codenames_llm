@@ -65,9 +65,31 @@ def main():
     # Choose which model to use for collaborative game
     model_choice = "llama31"  # Change this to test different models
 
+    # ===== PERSONA CONFIGURATION =====
+    # Set persona IDs for codemaster and guesser (use None for no persona)
+    # Available persona IDs: "1" through "20" (see personas.json for details)
+    #
+    # Examples of the 4 combinations:
+    # 1. No personas (baseline):
+    #    codemaster_persona, guesser_persona = None, None
+    #
+    # 2. Only codemaster has persona:
+    #    codemaster_persona, guesser_persona = "1", None
+    #
+    # 3. Only guesser has persona:
+    #    codemaster_persona, guesser_persona = None, "2"
+    #
+    # 4. Both have personas (can be same or different):
+    #    codemaster_persona, guesser_persona = "1", "3"
+
+    codemaster_persona = None  # Change to "1", "2", etc. to enable persona
+    guesser_persona = None     # Change to "1", "2", etc. to enable persona
+
     try:
         print(f"\n=== Starting Collaborative Codenames ===")
         print(f"Model: {model_configs[model_choice]['model_name']}")
+        print(f"Codemaster Persona: {codemaster_persona or 'None (baseline)'}")
+        print(f"Guesser Persona: {guesser_persona or 'None (baseline)'}")
         print(f"Mode: Codemaster + Guesser vs. Board")
         print(f"Games: 3\n")
 
@@ -77,12 +99,12 @@ def main():
         # Create shared LLM instance for both agents
         shared_llm = create_llm(config)
 
-        # Create codemaster and guesser agents
+        # Create codemaster and guesser agents with optional personas
         codemaster = llm_agent.LLMAgent(model_config=config, llm_instance=shared_llm)
-        codemaster.initialize_role('codemaster')
+        codemaster.initialize_role('codemaster', persona_id=codemaster_persona)
 
         guesser = llm_agent.LLMAgent(model_config=config, llm_instance=shared_llm)
-        guesser.initialize_role('guesser')
+        guesser.initialize_role('guesser', persona_id=guesser_persona)
 
         # Run collaborative games
         results = benchmark.run_collab_matchup(
@@ -96,7 +118,7 @@ def main():
         print("\n=== Game Results ===")
         print(f"Model: {results['model']}")
         print(f"Games played: {results['games_played']}")
-        print(f"Wins: {results['wins']}")
+        print(f"Wins: {results['games_won']}")
         print(f"Win rate: {results['win_rate']:.1%}")
         print(f"Average turns per game: {results['average_turns']:.1f}")
         print(f"Total correct guesses: {results['total_correct_guesses']}")

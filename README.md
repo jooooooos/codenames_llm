@@ -1,18 +1,20 @@
 # LLM Codenames Benchmark
 
-A framework for benchmarking Large Language Models (LLMs) against each other using the game Codenames. This system allows different LLMs to compete in 2v2 matches, where each team consists of a codemaster and a guesser from the same model.
+A framework for benchmarking Large Language Models (LLMs) using the game Codenames. This system tests how well LLMs can work together in a collaborative setting, where a codemaster and guesser from the same model work as a team to identify words on the board.
 
 ## Overview
 
-In Codenames, players compete to identify their team's words on the board using one-word clues. Each team has:
+In Codenames, players compete to identify their team's words on the board using one-word clues. Each game features:
 - A Codemaster who knows all word assignments and gives clues
 - A Guesser who tries to identify team words based on the clue
 
 This benchmark system:
-- Supports multiple LLM providers (OpenAI, Gemini, Anthropic)
-- Tracks detailed game metrics
+- Supports multiple LLM providers (OpenAI, Gemini, Anthropic, and local HuggingFace models)
+- Runs collaborative games where codemaster and guesser work together against the board
+- Tracks detailed game metrics (win rate, guess accuracy, turns per game)
 - Handles rate limiting and retries
 - Provides comprehensive game logs
+- Supports local model inference with quantization options
 
 ## Setup
 
@@ -34,61 +36,76 @@ pip install -r requirements.txt
 OPENAI_API_KEY=your-openai-key
 GEMINI_API_KEY=your-gemini-key
 ANTHROPIC_API_KEY=your-anthropic-key
+HF_TOKEN="your-hugginface-token"
 ```
 
 ## Project Structure
 
 ```
-codenames_benchmark/
-├── __init__.py
-├── llm_providers.py    # LLM provider implementations
-├── llm_agent.py       # Agent logic for codemaster/guesser
-├── benchmark.py       # Main benchmark system
-├── prompts.py        # Prompts for different roles
-└── words/           
-    └── default.txt   # Codenames word list
+codenames_llm/
+├── main.py              # Main entry point with model configurations
+├── benchmark.py         # Benchmark system and game simulation logic
+├── llm_providers.py     # LLM provider implementations (OpenAI, Gemini, Claude, HuggingFace)
+├── llm_agent.py         # Agent logic for codemaster/guesser roles
+├── prompts.py           # System prompts for different roles
+├── game_logger.py       # Game event logging system
+├── requirements.txt     # Python dependencies
+├── .env                 # API keys (not tracked in git)
+├── .gitignore          # Git ignore rules
+├── words/
+│   └── default.txt      # Codenames word list
+└── game_logs/           # Generated game logs and metrics
+    └── game_events.log
 ```
 
 ## Usage
 
-1. Run a benchmark match:
-```python
-from benchmark import CodeNamesBenchmark
+### Running the Benchmark
 
-# Configure models
-model_configs = {
-    "gpt4": {
-        "type": "openai",
-        "model_name": "gpt-4",
-        "api_key": "your-api-key",
-        "temperature": 0.7
-    },
-    "gemini": {
-        "type": "gemini",
-        "model_name": "gemini-pro",
-        "api_key": "your-api-key",
-        "temperature": 0.7
-    }
-}
+The simplest way to run the benchmark is through [main.py](main.py):
 
-# Initialize and run benchmark
-benchmark = CodeNamesBenchmark(log_dir="game_logs")
-metrics = benchmark.run_matchup(
-    team_a_config=model_configs["gpt4"],
-    team_b_config=model_configs["gemini"],
-    num_games=3
-)
+```bash
+python main.py
 ```
 
-2. View results:
+By default, this runs 3 collaborative games using the configured model (currently set to Llama 3.1).
+
+### Choosing a Model
+
+Edit the `model_choice` variable in [main.py:66](main.py#L66) to test different models:
+
 ```python
-for team, stats in metrics.items():
-    print(f"\n{team.upper()}:")
-    print(f"Wins: {stats['wins']}/{stats['games_played']}")
-    print(f"Win Rate: {stats['win_rate']:.2%}")
-    print(f"Correct guesses: {stats['total_correct_guesses']}")
-    print(f"Incorrect guesses: {stats['total_incorrect_guesses']}")
-    print(f"Average words per clue: {stats['average_words_per_clue']:.2f}")
+model_choice = "llama31"  # Options: "gpt4", "gpt3", "gemini", "claude", "llama31", "qwen3", "mistral"
+```
+
+### Available Models
+
+The system currently supports:
+
+**Cloud-based models:**
+- `gpt4`: GPT-4 (OpenAI)
+- `gpt3`: GPT-3.5-turbo (OpenAI)
+- `gemini`: Gemini 2.0 Flash (Google)
+- `claude`: Claude 3 Opus (Anthropic)
+
+**Local HuggingFace models:**
+- `llama31`: Meta Llama 3.1 8B Instruct
+- `qwen3`: Qwen 3 8B (with reasoning mode support)
+- `mistral`: Mistral 7B Instruct v0.3
+
+### Game Results
+
+After running, you'll see output like:
+```
+=== Game Results ===
+Model: meta-llama/Llama-3.1-8B-Instruct
+Games played: 3
+Wins: 2
+Win rate: 66.7%
+Average turns per game: 8.3
+Total correct guesses: 18
+Total incorrect guesses: 4
+Guess accuracy: 81.8%
 ```
 
 ## Adding New Models

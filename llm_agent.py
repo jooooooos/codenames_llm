@@ -13,6 +13,7 @@ from prompts import (
     get_guesser_prompt,
     GUESSER_FEEDBACK_PROMPT
 )
+from persona_loader import get_persona
 
 class LLMAgent:
     def __init__(self, model_config: Dict, llm_instance: Optional[Any] = None):
@@ -25,17 +26,29 @@ class LLMAgent:
             self.llm = create_llm(model_config)
         self.role: Optional[str] = None
 
-    def initialize_role(self, role: str):
-        """Set the role for this LLM agent"""
+    def initialize_role(self, role: str, persona_id: Optional[str] = None):
+        """
+        Set the role for this LLM agent, optionally with a persona.
+
+        Args:
+            role: Either 'codemaster' or 'guesser'
+            persona_id: Optional persona ID (e.g., "1", "2", "3") from personas.json
+        """
         self.role = role
         base_prompt = (CODEMASTER_SYSTEM_PROMPT if role == 'codemaster'
                       else GUESSER_SYSTEM_PROMPT)
 
+        # If persona is provided, prepend it to establish identity first
+        if persona_id:
+            persona_text = get_persona(persona_id)
+            # Persona comes FIRST to establish who the agent is
+            self.system_prompt = f"{persona_text}\n\n{base_prompt}"
+        else:
+            self.system_prompt = base_prompt
+
         # Add disable reasoning instruction if configured
         if self.model_config.get("disable_reasoning", False):
-            base_prompt += "\n\nIMPORTANT: Output ONLY valid JSON. Do not use <think> tags, reasoning blocks, or explanations. Provide only the JSON response."
-
-        self.system_prompt = base_prompt
+            self.system_prompt += "\n\nIMPORTANT: Output ONLY valid JSON. Do not use <think> tags, reasoning blocks, or explanations. Provide only the JSON response."
 
     def _make_request(self, messages: List[Dict], max_tokens: int) -> str:
         """Make an API request with retries"""
