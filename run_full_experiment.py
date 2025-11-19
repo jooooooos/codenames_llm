@@ -16,10 +16,11 @@ def run_full_persona_experiment(
     num_games_per_combination=5,
     experiment_name=None,
     shared_persona=False,
-    results_dir="experiment_results"
+    results_dir="experiment_results",
+    max_persona_id=20
 ):
     """
-    Run full persona experiment: all combinations of (None, "1", ..., "20") x (None, "1", ..., "20")
+    Run full persona experiment: all combinations of (None, "1", ..., max_persona_id) x (None, "1", ..., max_persona_id)
 
     Args:
         bnch: CodeNamesBenchmark instance
@@ -29,6 +30,7 @@ def run_full_persona_experiment(
         experiment_name: Optional name for this experiment (auto-generated if None)
         shared_persona: Whether agents know each other's personas
         results_dir: Directory to save results (default: "experiment_results")
+        max_persona_id: Maximum persona ID to test (default: 20)
 
     Returns:
         dict: Complete experiment results with all combinations
@@ -43,8 +45,8 @@ def run_full_persona_experiment(
     experiment_dir = os.path.join(results_dir, experiment_name)
     os.makedirs(experiment_dir, exist_ok=True)
 
-    # Define all persona IDs (None + "1" through "20")
-    persona_ids = [None] + [str(i) for i in range(1, 21)]
+    # Define all persona IDs (None + "1" through max_persona_id)
+    persona_ids = [None] + [str(i) for i in range(1, max_persona_id + 1)]
 
     # Calculate total combinations
     total_combinations = len(persona_ids) * len(persona_ids)
@@ -54,10 +56,8 @@ def run_full_persona_experiment(
     print(f"STARTING FULL PERSONA EXPERIMENT: {experiment_name}")
     print(f"{'='*80}")
     print(f"Model: {config['model_name']}")
-    print(f"Persona IDs: {len(persona_ids)} (None + 1-20)")
-    print(f"Combinations: {total_combinations} ({len(persona_ids)} x {len(persona_ids)})")
+    print(f"Persona IDs: {len(persona_ids)} (None + 1-{max_persona_id})")
     print(f"Games per combination: {num_games_per_combination}")
-    print(f"Total games: {total_games}")
     print(f"Persona sharing: {'Enabled' if shared_persona else 'Disabled'}")
     print(f"Results directory: {experiment_dir}")
     print(f"{'='*80}\n")
@@ -77,6 +77,7 @@ def run_full_persona_experiment(
             "total_combinations": total_combinations,
             "total_games": total_games,
             "shared_persona": shared_persona,
+            "max_persona_id": max_persona_id,
             "persona_ids": persona_ids
         },
         "combinations_completed": 0,
