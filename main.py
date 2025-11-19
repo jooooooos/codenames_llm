@@ -53,10 +53,16 @@ def main():
         },
         "mistral": {
             "type": "local_hf",
-            "model_name": "mistralai/Mistral-7B-Instruct-v0.3",
+            "model_name": "mistralai/Mistral-7B-Instruct-v0.2",
             "temperature": 0.7,
             # "load_in_4bit": True
-        }
+        },
+        "gemma2": {
+            "type": "local_hf",
+            "model_name": "google/gemma-2-9b-it",
+            "temperature": 0.7,
+            "max_tokens": 2048,
+        },
     }
 
     # Initialize benchmark
@@ -123,21 +129,31 @@ def main():
             team_config=config,
             num_games=3,
             codemaster=codemaster,
-            guesser=guesser
+            guesser=guesser,
+            codemaster_persona_id=codemaster_persona,
+            guesser_persona_id=guesser_persona,
+            persona_sharing=shared_persona,
+            save=True  # Save detailed game logs to JSON files
         )
 
         # Print results
         print("\n=== Game Results ===")
+        print(f"Experiment ID: {results['experiment_id']}")
         print(f"Model: {results['model']}")
+        print(f"Codemaster Persona: {results['codemaster_persona_id'] or 'None'}")
+        print(f"Guesser Persona: {results['guesser_persona_id'] or 'None'}")
+        print(f"Persona Sharing: {'Enabled' if results['persona_sharing_enabled'] else 'Disabled'}")
         print(f"Games played: {results['games_played']}")
         print(f"Wins: {results['games_won']}")
         print(f"Win rate: {results['win_rate']:.1%}")
         print(f"Average turns per game: {results['average_turns']:.1f}")
+        print(f"Average words per clue: {results['average_words_per_clue']:.2f}")
         print(f"Total correct guesses: {results['total_correct_guesses']}")
         print(f"Total incorrect guesses: {results['total_incorrect_guesses']}")
         if results['total_correct_guesses'] > 0:
             accuracy = results['total_correct_guesses'] / (results['total_correct_guesses'] + results['total_incorrect_guesses'])
             print(f"Guess accuracy: {accuracy:.1%}")
+        print(f"Experiment duration: {results['experiment_duration']:.1f}s")
 
     except Exception as e:
         print(f"Game failed: {e}")

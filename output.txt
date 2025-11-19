@@ -1,0 +1,534 @@
+
+============================================================
+Running game with gemma2: google/gemma-2-9b-it
+============================================================
+
+
+Starting collaborative game 0
+
+Board State:
+KANGAROO | BERRY | LIFE | DANCE | APPLE
+FILM | MATCH | PHOENIX | SPELL | TOKYO
+CANADA | CHARGE | MILLIONAIRE | SCALE | MASS
+SPACE | ENGINE | HAND | BILL | DRILL
+WHIP | PARK | DRESS | PALM | VACUUM
+
+
+=== Turn 1 ===
+Remaining words to guess: MATCH, DRESS, LIFE, MASS, CHARGE, FILM, PARK, KANGAROO, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "Many of the words relate to tangible objects or experiences.  'ENVIRONMENT' connects to FILM, PARK, LIFE, and potentially MASS if thinking about environmental impact.",
+  "clue": "ENVIRONMENT",
+  "number": 4
+}
+```
+Codemaster's clue: ENVIRONMENT 4
+(Reasoning: Many of the words relate to tangible objects or experiences.  'ENVIRONMENT' connects to FILM, PARK, LIFE, and potentially MASS if thinking about environmental impact.)
+guesser raw output: ```json
+{
+  "reasoning": "ENVIRONMENT can relate to nature, places, or surroundings.  'PARK' and 'SCALE' both fit within these concepts.",
+  "guess": "PARK" 
+}
+```
+Guesser's guess: PARK
+(Reasoning: ENVIRONMENT can relate to nature, places, or surroundings.  'PARK' and 'SCALE' both fit within these concepts.)
+Correct guess!
+Remaining guesses this turn: 4
+guesser raw output: ```json
+{
+  "reasoning": "ENVIRONMENT can relate to nature, which connects to BERRY, PALM, and SPACE. Four seems like a reasonable number.",
+  "guess": "BERRY"
+}
+```
+Guesser's guess: BERRY
+(Reasoning: ENVIRONMENT can relate to nature, which connects to BERRY, PALM, and SPACE. Four seems like a reasonable number.)
+Hit a neutral word.
+
+Board State:
+KANGAROO | [BERRY] | LIFE | DANCE | APPLE
+FILM | MATCH | PHOENIX | SPELL | TOKYO
+CANADA | CHARGE | MILLIONAIRE | SCALE | MASS
+SPACE | ENGINE | HAND | BILL | DRILL
+WHIP | [PARK] | DRESS | PALM | VACUUM
+
+
+=== Turn 2 ===
+Remaining words to guess: MATCH, DRESS, LIFE, MASS, CHARGE, FILM, KANGAROO, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "Connecting 'FILM' and 'MASS' through the concept of 'story' and 'weight'.  'CHARGE' can also relate to a film's impact.",
+  "clue": "STORY",
+  "number": 3
+}
+```
+Codemaster's clue: STORY 3
+(Reasoning: Connecting 'FILM' and 'MASS' through the concept of 'story' and 'weight'.  'CHARGE' can also relate to a film's impact.)
+guesser raw output: ```json
+{
+  "reasoning": "STORY could relate to FILM, DANCE, or even SPELL depending on the context. 3 is a relatively small number so I'm going with the most direct connection.",
+  "guess": "FILM"
+}
+```
+Guesser's guess: FILM
+(Reasoning: STORY could relate to FILM, DANCE, or even SPELL depending on the context. 3 is a relatively small number so I'm going with the most direct connection.)
+Correct guess!
+Remaining guesses this turn: 3
+guesser raw output: ```json
+{
+  "reasoning": "STORY can relate to DANCE (a story told through movement) and SPELL (a story can be woven through spells in fantasy), both of which are on the board.",
+  "guess": "DANCE"
+}
+```
+Guesser's guess: DANCE
+(Reasoning: STORY can relate to DANCE (a story told through movement) and SPELL (a story can be woven through spells in fantasy), both of which are on the board.)
+Hit a neutral word.
+
+Board State:
+KANGAROO | [BERRY] | LIFE | [DANCE] | APPLE
+[FILM] | MATCH | PHOENIX | SPELL | TOKYO
+CANADA | CHARGE | MILLIONAIRE | SCALE | MASS
+SPACE | ENGINE | HAND | BILL | DRILL
+WHIP | [PARK] | DRESS | PALM | VACUUM
+
+
+=== Turn 3 ===
+Remaining words to guess: MATCH, DRESS, LIFE, MASS, CHARGE, KANGAROO, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "Many of the remaining words relate to concepts of size, weight, or physical attributes. 'WEIGHT' can connect to MASS and KANGAROO.",
+  "clue": "WEIGHT",
+  "number": 2
+}
+```
+Codemaster's clue: WEIGHT 2
+(Reasoning: Many of the remaining words relate to concepts of size, weight, or physical attributes. 'WEIGHT' can connect to MASS and KANGAROO.)
+guesser raw output: ```json
+{
+  "reasoning": "WEIGHT can refer to both physical heaviness (MASS) and importance (SCALE).",
+  "guess": "SCALE"
+}
+```
+Guesser's guess: SCALE
+(Reasoning: WEIGHT can refer to both physical heaviness (MASS) and importance (SCALE).)
+Hit a neutral word.
+
+Board State:
+KANGAROO | [BERRY] | LIFE | [DANCE] | APPLE
+[FILM] | MATCH | PHOENIX | SPELL | TOKYO
+CANADA | CHARGE | MILLIONAIRE | [SCALE] | MASS
+SPACE | ENGINE | HAND | BILL | DRILL
+WHIP | [PARK] | DRESS | PALM | VACUUM
+
+
+=== Turn 4 ===
+Remaining words to guess: MATCH, DRESS, LIFE, MASS, CHARGE, KANGAROO, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "Many of the remaining words relate to concepts of appearance or action. 'STYLE' can connect to 'DRESS' and 'MATCH' while also hinting at 'CHARGE' and 'KANGAROO' in a broader sense.",
+  "clue": "STYLE",
+  "number": 4
+}
+```
+Codemaster's clue: STYLE 4
+(Reasoning: Many of the remaining words relate to concepts of appearance or action. 'STYLE' can connect to 'DRESS' and 'MATCH' while also hinting at 'CHARGE' and 'KANGAROO' in a broader sense.)
+guesser raw output: ```json
+{
+  "reasoning": "STYLE can relate to fashion (DRESS), appearance (HAND), or a particular manner (WHIP). I'm going with DRESS as the most direct connection.",
+  "guess": "DRESS"
+}
+```
+Guesser's guess: DRESS
+(Reasoning: STYLE can relate to fashion (DRESS), appearance (HAND), or a particular manner (WHIP). I'm going with DRESS as the most direct connection.)
+Correct guess!
+Remaining guesses this turn: 4
+guesser raw output: ```json
+{
+  "reasoning": "STYLE can relate to fashion, appearance, or mannerisms.  'HAND' could relate to a style of handwriting or gesture.",
+  "guess": "HAND"
+}
+```
+Guesser's guess: HAND
+(Reasoning: STYLE can relate to fashion, appearance, or mannerisms.  'HAND' could relate to a style of handwriting or gesture.)
+Hit a neutral word.
+
+Board State:
+KANGAROO | [BERRY] | LIFE | [DANCE] | APPLE
+[FILM] | MATCH | PHOENIX | SPELL | TOKYO
+CANADA | CHARGE | MILLIONAIRE | [SCALE] | MASS
+SPACE | ENGINE | [HAND] | BILL | DRILL
+WHIP | [PARK] | [DRESS] | PALM | VACUUM
+
+
+=== Turn 5 ===
+Remaining words to guess: MATCH, LIFE, MASS, CHARGE, KANGAROO, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "Connecting 'charge' and 'kangaroo' through the idea of energy/electricity.",
+  "clue": "JUMP",
+  "number": 2
+}
+```
+Codemaster's clue: JUMP 2
+(Reasoning: Connecting 'charge' and 'kangaroo' through the idea of energy/electricity.)
+guesser raw output: ```json
+{
+  "reasoning": "JUMP can refer to a sudden movement, which makes KANGAROO the most likely choice. The number 2 suggests there might be another word related to leaping or elevation.",
+  "guess": "KANGAROO"
+}
+```
+Guesser's guess: KANGAROO
+(Reasoning: JUMP can refer to a sudden movement, which makes KANGAROO the most likely choice. The number 2 suggests there might be another word related to leaping or elevation.)
+Correct guess!
+Remaining guesses this turn: 2
+guesser raw output: ```json
+{
+  "reasoning": "JUMP can relate to both physical action and metaphorical leaps, so I'm looking for words that fit either interpretation.  'MILLIONAIRE' suggests a leap in financial status.",
+  "guess": "MILLIONAIRE"
+}
+```
+Guesser's guess: MILLIONAIRE
+(Reasoning: JUMP can relate to both physical action and metaphorical leaps, so I'm looking for words that fit either interpretation.  'MILLIONAIRE' suggests a leap in financial status.)
+Hit a neutral word.
+
+Board State:
+[KANGAROO] | [BERRY] | LIFE | [DANCE] | APPLE
+[FILM] | MATCH | PHOENIX | SPELL | TOKYO
+CANADA | CHARGE | [MILLIONAIRE] | [SCALE] | MASS
+SPACE | ENGINE | [HAND] | BILL | DRILL
+WHIP | [PARK] | [DRESS] | PALM | VACUUM
+
+
+=== Turn 6 ===
+Remaining words to guess: MATCH, LIFE, MASS, CHARGE, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "MASS, CHARGE, and PALM can all relate to the concept of FORCE.",
+  "clue": "FORCE",
+  "number": 3
+}
+```
+Codemaster's clue: FORCE 3
+(Reasoning: MASS, CHARGE, and PALM can all relate to the concept of FORCE.)
+guesser raw output: ```json
+{
+  "reasoning": "FORCE can relate to physical power (MATCH, WHIP) or a compelling influence (SPELL, CHARGE). Given the number 3, I'm leaning towards those with a bit more metaphorical weight.",
+  "guess": "SPELL"
+}
+```
+Guesser's guess: SPELL
+(Reasoning: FORCE can relate to physical power (MATCH, WHIP) or a compelling influence (SPELL, CHARGE). Given the number 3, I'm leaning towards those with a bit more metaphorical weight.)
+Hit a neutral word.
+
+Board State:
+[KANGAROO] | [BERRY] | LIFE | [DANCE] | APPLE
+[FILM] | MATCH | PHOENIX | [SPELL] | TOKYO
+CANADA | CHARGE | [MILLIONAIRE] | [SCALE] | MASS
+SPACE | ENGINE | [HAND] | BILL | DRILL
+WHIP | [PARK] | [DRESS] | PALM | VACUUM
+
+
+=== Turn 7 ===
+Remaining words to guess: MATCH, LIFE, MASS, CHARGE, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "MASS and CHARGE can both relate to electricity, and LIFE can relate to energy.",
+  "clue": "POWER",
+  "number": 3
+}
+```
+Codemaster's clue: POWER 3
+(Reasoning: MASS and CHARGE can both relate to electricity, and LIFE can relate to energy.)
+guesser raw output: ```json
+{
+  "reasoning": "POWER can relate to strength, energy, or capability.  Of the remaining words, ENGINE and CHARGE seem most closely tied to power.",
+  "guess": "ENGINE"
+}
+```
+Guesser's guess: ENGINE
+(Reasoning: POWER can relate to strength, energy, or capability.  Of the remaining words, ENGINE and CHARGE seem most closely tied to power.)
+Hit a neutral word.
+
+Board State:
+[KANGAROO] | [BERRY] | LIFE | [DANCE] | APPLE
+[FILM] | MATCH | PHOENIX | [SPELL] | TOKYO
+CANADA | CHARGE | [MILLIONAIRE] | [SCALE] | MASS
+SPACE | [ENGINE] | [HAND] | BILL | DRILL
+WHIP | [PARK] | [DRESS] | PALM | VACUUM
+
+
+=== Turn 8 ===
+Remaining words to guess: MATCH, LIFE, MASS, CHARGE, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "Both 'MATCH' and 'CHARGE' can relate to creating an electrical connection, and 'LIFE' can be associated with the spark of life.",
+  "clue": "CURRENT",
+  "number": 3
+}
+```
+Codemaster's clue: CURRENT 3
+(Reasoning: Both 'MATCH' and 'CHARGE' can relate to creating an electrical connection, and 'LIFE' can be associated with the spark of life.)
+guesser raw output: ```json
+{
+  "reasoning": "CURRENT can refer to something flowing like  a WATER, or something happening NOW like in the present TIME. ",
+  "guess": "TIME"
+}
+```
+**WARNING**: Guesser output 'TIME' is not available on board. Forcing STOP.
+Guesser's guess: STOP
+(Reasoning: Guessed invalid word TIME. Forcing stop.)
+Guessed a word not on the board
+
+Board State:
+[KANGAROO] | [BERRY] | LIFE | [DANCE] | APPLE
+[FILM] | MATCH | PHOENIX | [SPELL] | TOKYO
+CANADA | CHARGE | [MILLIONAIRE] | [SCALE] | MASS
+SPACE | [ENGINE] | [HAND] | BILL | DRILL
+WHIP | [PARK] | [DRESS] | PALM | VACUUM
+
+
+=== Turn 9 ===
+Remaining words to guess: MATCH, LIFE, MASS, CHARGE, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "CONNECTING LIFE AND MASS, ALSO A BROAD ENOUGH TERM TO POTENTIALLY INCLUDE CHARGE IF WE'RE LUCKY",
+  "clue": "ENERGY",
+  "number": 3
+}
+```
+Codemaster's clue: ENERGY 3
+(Reasoning: CONNECTING LIFE AND MASS, ALSO A BROAD ENOUGH TERM TO POTENTIALLY INCLUDE CHARGE IF WE'RE LUCKY)
+guesser raw output: ```json
+{
+  "reasoning": "ENERGY can be related to HEAT, as in thermal energy.  CHARGE could also be a play on electrical energy.",
+  "guess": "CHARGE"
+}
+```
+Guesser's guess: CHARGE
+(Reasoning: ENERGY can be related to HEAT, as in thermal energy.  CHARGE could also be a play on electrical energy.)
+Correct guess!
+Remaining guesses this turn: 3
+guesser raw output: ```json
+{
+  "reasoning": "ENERGY can relate to heat or power, both of which relate to FIRE. Also, PHOENIX is a mythical bird associated with fire and rebirth.",
+  "guess": "PHOENIX"
+}
+```
+Guesser's guess: PHOENIX
+(Reasoning: ENERGY can relate to heat or power, both of which relate to FIRE. Also, PHOENIX is a mythical bird associated with fire and rebirth.)
+Hit a neutral word.
+
+Board State:
+[KANGAROO] | [BERRY] | LIFE | [DANCE] | APPLE
+[FILM] | MATCH | [PHOENIX] | [SPELL] | TOKYO
+CANADA | [CHARGE] | [MILLIONAIRE] | [SCALE] | MASS
+SPACE | [ENGINE] | [HAND] | BILL | DRILL
+WHIP | [PARK] | [DRESS] | PALM | VACUUM
+
+
+=== Turn 10 ===
+Remaining words to guess: MATCH, LIFE, MASS, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "Several words on the board relate to concepts of touch or feeling, and 'SOFT' can connect to both 'MASS' and 'PALM' through related concepts like texture.",
+  "clue": "SOFT",
+  "number": 2
+}
+```
+Codemaster's clue: SOFT 2
+(Reasoning: Several words on the board relate to concepts of touch or feeling, and 'SOFT' can connect to both 'MASS' and 'PALM' through related concepts like texture.)
+guesser raw output: ```json
+{
+  "reasoning": "SOFT can relate to both the texture of APPLE and the sound a WHIP makes. 2 is a small number, so I'll go with the more straightforward connection.",
+  "guess": "APPLE"
+}
+```
+Guesser's guess: APPLE
+(Reasoning: SOFT can relate to both the texture of APPLE and the sound a WHIP makes. 2 is a small number, so I'll go with the more straightforward connection.)
+Hit a neutral word.
+
+Board State:
+[KANGAROO] | [BERRY] | LIFE | [DANCE] | [APPLE]
+[FILM] | MATCH | [PHOENIX] | [SPELL] | TOKYO
+CANADA | [CHARGE] | [MILLIONAIRE] | [SCALE] | MASS
+SPACE | [ENGINE] | [HAND] | BILL | DRILL
+WHIP | [PARK] | [DRESS] | PALM | VACUUM
+
+
+=== Turn 11 ===
+Remaining words to guess: MATCH, LIFE, MASS, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "Connecting 'MATCH' to 'FIRE' as both can involve ignition or a state of agreement.  'LIFE' relates to 'FIRE' through the concept of passion and energy. 'MASS' could relate to 'FIRE' in terms of its destructive power or the mass of burning material.",
+  "clue": "FIRE",
+  "number": 3
+}
+```
+Codemaster's clue: FIRE 3
+(Reasoning: Connecting 'MATCH' to 'FIRE' as both can involve ignition or a state of agreement.  'LIFE' relates to 'FIRE' through the concept of passion and energy. 'MASS' could relate to 'FIRE' in terms of its destructive power or the mass of burning material.)
+guesser raw output: ```json
+{
+  "reasoning": "FIRE can refer to heat, passion, or danger.  MASS and WHIP are both potential associations with fire in these contexts.",
+  "guess": "MASS"
+}
+```
+Guesser's guess: MASS
+(Reasoning: FIRE can refer to heat, passion, or danger.  MASS and WHIP are both potential associations with fire in these contexts.)
+Correct guess!
+Remaining guesses this turn: 3
+guesser raw output: ```json
+{
+  "reasoning": "FIRE can mean HEAT, and MATCH is related to both FIRE and HEAT. ",
+  "guess": "MATCH"
+}
+```
+Guesser's guess: MATCH
+(Reasoning: FIRE can mean HEAT, and MATCH is related to both FIRE and HEAT. )
+Correct guess!
+Remaining guesses this turn: 2
+guesser raw output: ```json
+{
+  "reasoning": "FIRE is associated with heat, and WHIP can be used to create heat through friction. Also, FIRE can be used to process substances like PALM trees into something else.",
+  "guess": "WHIP"
+}
+```
+Guesser's guess: WHIP
+(Reasoning: FIRE is associated with heat, and WHIP can be used to create heat through friction. Also, FIRE can be used to process substances like PALM trees into something else.)
+Hit a neutral word.
+
+Board State:
+[KANGAROO] | [BERRY] | LIFE | [DANCE] | [APPLE]
+[FILM] | [MATCH] | [PHOENIX] | [SPELL] | TOKYO
+CANADA | [CHARGE] | [MILLIONAIRE] | [SCALE] | [MASS]
+SPACE | [ENGINE] | [HAND] | BILL | DRILL
+[WHIP] | [PARK] | [DRESS] | PALM | VACUUM
+
+
+=== Turn 12 ===
+Remaining words to guess: LIFE, PALM
+codemaster raw output: ```json
+{
+  "reasoning": "Both 'LIFE' and 'PALM' can relate to growth and vitality.  'GREEN' is a common symbol for these concepts and hasn't been used yet.",
+  "clue": "GREEN",
+  "number": 2
+}
+```
+Codemaster's clue: GREEN 2
+(Reasoning: Both 'LIFE' and 'PALM' can relate to growth and vitality.  'GREEN' is a common symbol for these concepts and hasn't been used yet.)
+guesser raw output: ```json
+{
+  "reasoning": "GREEN  is a common color for plants and PALM trees are green.",
+  "guess": "PALM"
+}
+```
+Guesser's guess: PALM
+(Reasoning: GREEN  is a common color for plants and PALM trees are green.)
+Correct guess!
+Remaining guesses this turn: 2
+guesser raw output: ```json
+{
+"reasoning": "GREEN can refer to both the color and environmentalism.  VACUUM is a type of machine, and SPACE is associated with emptiness, neither of which directly relate to the clue.  DRILL could be interpreted as a tool used to extract resources, potentially linking to an environmental theme.",
+"guess": "DRILL"
+}
+```
+Guesser's guess: DRILL
+(Reasoning: GREEN can refer to both the color and environmentalism.  VACUUM is a type of machine, and SPACE is associated with emptiness, neither of which directly relate to the clue.  DRILL could be interpreted as a tool used to extract resources, potentially linking to an environmental theme.)
+Hit a neutral word.
+
+Board State:
+[KANGAROO] | [BERRY] | LIFE | [DANCE] | [APPLE]
+[FILM] | [MATCH] | [PHOENIX] | [SPELL] | TOKYO
+CANADA | [CHARGE] | [MILLIONAIRE] | [SCALE] | [MASS]
+SPACE | [ENGINE] | [HAND] | BILL | [DRILL]
+[WHIP] | [PARK] | [DRESS] | [PALM] | VACUUM
+
+
+=== Turn 13 ===
+Remaining words to guess: LIFE
+codemaster raw output: ```json
+{
+  "reasoning": "LIFE is a broad concept, but strongly associated with  GROWTH. It's a single word clue that avoids any existing words on the board.",
+  "clue": "GROWTH",
+  "number": 1
+}
+```
+Codemaster's clue: GROWTH 1
+(Reasoning: LIFE is a broad concept, but strongly associated with  GROWTH. It's a single word clue that avoids any existing words on the board.)
+guesser raw output: ```json
+{"reasoning": "GROWTH often relates to development and expansion, and SPACE is a concept that can symbolize limitless potential for growth.", "guess": "SPACE"}
+```
+Guesser's guess: SPACE
+(Reasoning: GROWTH often relates to development and expansion, and SPACE is a concept that can symbolize limitless potential for growth.)
+Hit a neutral word.
+
+Board State:
+[KANGAROO] | [BERRY] | LIFE | [DANCE] | [APPLE]
+[FILM] | [MATCH] | [PHOENIX] | [SPELL] | TOKYO
+CANADA | [CHARGE] | [MILLIONAIRE] | [SCALE] | [MASS]
+[SPACE] | [ENGINE] | [HAND] | BILL | [DRILL]
+[WHIP] | [PARK] | [DRESS] | [PALM] | VACUUM
+
+
+=== Turn 14 ===
+Remaining words to guess: LIFE
+codemaster raw output: ```json
+{
+  "reasoning": "LIFE is often connected to the concept of LIVING things.  Many words on the board relate to organisms.",
+  "clue": "ORGANISM",
+  "number": 1
+}
+```
+Codemaster's clue: ORGANISM 1
+(Reasoning: LIFE is often connected to the concept of LIVING things.  Many words on the board relate to organisms.)
+guesser raw output: ```json
+{
+  "reasoning": "ORGANISM implies living things, and TOKYO is a major city with a large population.",
+  "guess": "TOKYO"
+}
+```
+Guesser's guess: TOKYO
+(Reasoning: ORGANISM implies living things, and TOKYO is a major city with a large population.)
+Hit a neutral word.
+
+Board State:
+[KANGAROO] | [BERRY] | LIFE | [DANCE] | [APPLE]
+[FILM] | [MATCH] | [PHOENIX] | [SPELL] | [TOKYO]
+CANADA | [CHARGE] | [MILLIONAIRE] | [SCALE] | [MASS]
+[SPACE] | [ENGINE] | [HAND] | BILL | [DRILL]
+[WHIP] | [PARK] | [DRESS] | [PALM] | VACUUM
+
+
+=== Turn 15 ===
+Remaining words to guess: LIFE
+codemaster raw output: ```json
+{
+  "reasoning": "LIFE is often associated with growth, cycles, and beginnings. 'SEED' connects to those themes and is a single, concise word.",
+  "clue": "SEED",
+  "number": 1
+}
+```
+Codemaster's clue: SEED 1
+(Reasoning: LIFE is often associated with growth, cycles, and beginnings. 'SEED' connects to those themes and is a single, concise word.)
+guesser raw output: ```json
+{
+  "reasoning": "SEED often relates to plant life, and  LIFE is the only remaining word on the board that fits this connection.",
+  "guess": "LIFE"
+}
+```
+Guesser's guess: LIFE
+(Reasoning: SEED often relates to plant life, and  LIFE is the only remaining word on the board that fits this connection.)
+Correct guess!
+All words guessed! You win!
+
+Board State:
+[KANGAROO] | [BERRY] | [LIFE] | [DANCE] | [APPLE]
+[FILM] | [MATCH] | [PHOENIX] | [SPELL] | [TOKYO]
+CANADA | [CHARGE] | [MILLIONAIRE] | [SCALE] | [MASS]
+[SPACE] | [ENGINE] | [HAND] | BILL | [DRILL]
+[WHIP] | [PARK] | [DRESS] | [PALM] | VACUUM
+
+
+============================================================
+Results for gemma2
+============================================================
+{'model': 'google/gemma-2-9b-it', 'games_played': 1, 'games_won': 1, 'total_correct_guesses': 9, 'total_incorrect_guesses': 14, 'average_words_per_clue': 0.6, 'all_turns': [[{'turn_number': 1, 'team': 'Team', 'clue_word': 'ENVIRONMENT', 'clue_number': 4, 'guesses': ['PARK', 'BERRY'], 'results': ['team word', 'neutral'], 'remaining_team_words': ['MATCH', 'DRESS', 'LIFE', 'MASS', 'CHARGE', 'FILM', 'KANGAROO', 'PALM'], 'remaining_neutral_words': ['SCALE', 'MILLIONAIRE', 'SPACE', 'SPELL', 'WHIP', 'CANADA', 'BILL', 'TOKYO', 'APPLE', 'DANCE', 'HAND', 'PHOENIX', 'ENGINE', 'DRILL'], 'guessed_words_so_far': ['PARK', 'BERRY']}, {'turn_number': 2, 'team': 'Team', 'clue_word': 'STORY', 'clue_number': 3, 'guesses': ['FILM', 'DANCE'], 'results': ['team word', 'neutral'], 'remaining_team_words': ['MATCH', 'DRESS', 'LIFE', 'MASS', 'CHARGE', 'KANGAROO', 'PALM'], 'remaining_neutral_words': ['SCALE', 'MILLIONAIRE', 'SPACE', 'SPELL', 'WHIP', 'CANADA', 'BILL', 'TOKYO', 'APPLE', 'HAND', 'PHOENIX', 'ENGINE', 'DRILL'], 'guessed_words_so_far': ['FILM', 'PARK', 'BERRY', 'DANCE']}, {'turn_number': 3, 'team': 'Team', 'clue_word': 'WEIGHT', 'clue_number': 2, 'guesses': ['SCALE'], 'results': ['neutral'], 'remaining_team_words': ['MATCH', 'DRESS', 'LIFE', 'MASS', 'CHARGE', 'KANGAROO', 'PALM'], 'remaining_neutral_words': ['MILLIONAIRE', 'SPACE', 'SPELL', 'WHIP', 'CANADA', 'BILL', 'TOKYO', 'APPLE', 'HAND', 'PHOENIX', 'ENGINE', 'DRILL'], 'guessed_words_so_far': ['FILM', 'BERRY', 'DANCE', 'SCALE', 'PARK']}, {'turn_number': 4, 'team': 'Team', 'clue_word': 'STYLE', 'clue_number': 4, 'guesses': ['DRESS', 'HAND'], 'results': ['team word', 'neutral'], 'remaining_team_words': ['MATCH', 'LIFE', 'MASS', 'CHARGE', 'KANGAROO', 'PALM'], 'remaining_neutral_words': ['MILLIONAIRE', 'SPACE', 'SPELL', 'WHIP', 'CANADA', 'BILL', 'TOKYO', 'APPLE', 'PHOENIX', 'ENGINE', 'DRILL'], 'guessed_words_so_far': ['FILM', 'BERRY', 'DANCE', 'SCALE', 'HAND', 'PARK', 'DRESS']}, {'turn_number': 5, 'team': 'Team', 'clue_word': 'JUMP', 'clue_number': 2, 'guesses': ['KANGAROO', 'MILLIONAIRE'], 'results': ['team word', 'neutral'], 'remaining_team_words': ['MATCH', 'LIFE', 'MASS', 'CHARGE', 'PALM'], 'remaining_neutral_words': ['SPACE', 'SPELL', 'WHIP', 'CANADA', 'BILL', 'TOKYO', 'APPLE', 'PHOENIX', 'ENGINE', 'DRILL'], 'guessed_words_so_far': ['FILM', 'BERRY', 'DANCE', 'KANGAROO', 'MILLIONAIRE', 'SCALE', 'HAND', 'PARK', 'DRESS']}, {'turn_number': 6, 'team': 'Team', 'clue_word': 'FORCE', 'clue_number': 3, 'guesses': ['SPELL'], 'results': ['neutral'], 'remaining_team_words': ['MATCH', 'LIFE', 'MASS', 'CHARGE', 'PALM'], 'remaining_neutral_words': ['SPACE', 'WHIP', 'CANADA', 'BILL', 'TOKYO', 'APPLE', 'PHOENIX', 'ENGINE', 'DRILL'], 'guessed_words_so_far': ['FILM', 'BERRY', 'DANCE', 'KANGAROO', 'MILLIONAIRE', 'SPELL', 'SCALE', 'HAND', 'PARK', 'DRESS']}, {'turn_number': 7, 'team': 'Team', 'clue_word': 'POWER', 'clue_number': 3, 'guesses': ['ENGINE'], 'results': ['neutral'], 'remaining_team_words': ['MATCH', 'LIFE', 'MASS', 'CHARGE', 'PALM'], 'remaining_neutral_words': ['SPACE', 'WHIP', 'CANADA', 'BILL', 'TOKYO', 'APPLE', 'PHOENIX', 'DRILL'], 'guessed_words_so_far': ['FILM', 'BERRY', 'DANCE', 'ENGINE', 'KANGAROO', 'MILLIONAIRE', 'SPELL', 'SCALE', 'HAND', 'PARK', 'DRESS']}, {'turn_number': 8, 'team': 'Team', 'clue_word': 'CURRENT', 'clue_number': 3, 'guesses': ['STOP'], 'results': ['neutral'], 'remaining_team_words': ['MATCH', 'LIFE', 'MASS', 'CHARGE', 'PALM'], 'remaining_neutral_words': ['SPACE', 'WHIP', 'CANADA', 'BILL', 'TOKYO', 'APPLE', 'PHOENIX', 'DRILL'], 'guessed_words_so_far': ['FILM', 'BERRY', 'DANCE', 'ENGINE', 'KANGAROO', 'MILLIONAIRE', 'STOP', 'SPELL', 'SCALE', 'HAND', 'PARK', 'DRESS']}, {'turn_number': 9, 'team': 'Team', 'clue_word': 'ENERGY', 'clue_number': 3, 'guesses': ['CHARGE', 'PHOENIX'], 'results': ['team word', 'neutral'], 'remaining_team_words': ['MATCH', 'LIFE', 'MASS', 'PALM'], 'remaining_neutral_words': ['SPACE', 'WHIP', 'CANADA', 'BILL', 'TOKYO', 'APPLE', 'DRILL'], 'guessed_words_so_far': ['CHARGE', 'FILM', 'BERRY', 'DANCE', 'ENGINE', 'KANGAROO', 'MILLIONAIRE', 'STOP', 'PHOENIX', 'SPELL', 'SCALE', 'HAND', 'PARK', 'DRESS']}, {'turn_number': 10, 'team': 'Team', 'clue_word': 'SOFT', 'clue_number': 2, 'guesses': ['APPLE'], 'results': ['neutral'], 'remaining_team_words': ['MATCH', 'LIFE', 'MASS', 'PALM'], 'remaining_neutral_words': ['SPACE', 'WHIP', 'CANADA', 'BILL', 'TOKYO', 'DRILL'], 'guessed_words_so_far': ['CHARGE', 'FILM', 'BERRY', 'DANCE', 'ENGINE', 'KANGAROO', 'MILLIONAIRE', 'STOP', 'APPLE', 'PHOENIX', 'SPELL', 'SCALE', 'HAND', 'PARK', 'DRESS']}, {'turn_number': 11, 'team': 'Team', 'clue_word': 'FIRE', 'clue_number': 3, 'guesses': ['MASS', 'MATCH', 'WHIP'], 'results': ['team word', 'team word', 'neutral'], 'remaining_team_words': ['LIFE', 'PALM'], 'remaining_neutral_words': ['SPACE', 'CANADA', 'BILL', 'TOKYO', 'DRILL'], 'guessed_words_so_far': ['MASS', 'CHARGE', 'FILM', 'BERRY', 'DANCE', 'ENGINE', 'KANGAROO', 'MILLIONAIRE', 'STOP', 'APPLE', 'MATCH', 'PHOENIX', 'SPELL', 'SCALE', 'HAND', 'PARK', 'WHIP', 'DRESS']}, {'turn_number': 12, 'team': 'Team', 'clue_word': 'GREEN', 'clue_number': 2, 'guesses': ['PALM', 'DRILL'], 'results': ['team word', 'neutral'], 'remaining_team_words': ['LIFE'], 'remaining_neutral_words': ['SPACE', 'CANADA', 'BILL', 'TOKYO'], 'guessed_words_so_far': ['CHARGE', 'STOP', 'PHOENIX', 'SCALE', 'PALM', 'KANGAROO', 'PARK', 'DRESS', 'MASS', 'BERRY', 'MILLIONAIRE', 'HAND', 'DANCE', 'APPLE', 'SPELL', 'FILM', 'ENGINE', 'DRILL', 'MATCH', 'WHIP']}, {'turn_number': 13, 'team': 'Team', 'clue_word': 'GROWTH', 'clue_number': 1, 'guesses': ['SPACE'], 'results': ['neutral'], 'remaining_team_words': ['LIFE'], 'remaining_neutral_words': ['CANADA', 'BILL', 'TOKYO'], 'guessed_words_so_far': ['CHARGE', 'STOP', 'PHOENIX', 'SCALE', 'PALM', 'KANGAROO', 'PARK', 'DRESS', 'MASS', 'BERRY', 'MILLIONAIRE', 'SPACE', 'HAND', 'DANCE', 'APPLE', 'SPELL', 'FILM', 'ENGINE', 'DRILL', 'MATCH', 'WHIP']}, {'turn_number': 14, 'team': 'Team', 'clue_word': 'ORGANISM', 'clue_number': 1, 'guesses': ['TOKYO'], 'results': ['neutral'], 'remaining_team_words': ['LIFE'], 'remaining_neutral_words': ['CANADA', 'BILL'], 'guessed_words_so_far': ['CHARGE', 'STOP', 'PHOENIX', 'SCALE', 'PALM', 'KANGAROO', 'PARK', 'DRESS', 'MASS', 'BERRY', 'MILLIONAIRE', 'SPACE', 'HAND', 'TOKYO', 'DANCE', 'APPLE', 'SPELL', 'FILM', 'ENGINE', 'DRILL', 'MATCH', 'WHIP']}, {'turn_number': 15, 'team': 'Team', 'clue_word': 'SEED', 'clue_number': 1, 'guesses': ['LIFE'], 'results': ['team word'], 'remaining_team_words': [], 'remaining_neutral_words': ['CANADA', 'BILL'], 'guessed_words_so_far': ['CHARGE', 'STOP', 'PHOENIX', 'SCALE', 'PALM', 'KANGAROO', 'PARK', 'DRESS', 'MASS', 'BERRY', 'LIFE', 'MILLIONAIRE', 'SPACE', 'HAND', 'TOKYO', 'DANCE', 'APPLE', 'SPELL', 'FILM', 'ENGINE', 'DRILL', 'MATCH', 'WHIP']}]], 'win_rate': 1.0}
