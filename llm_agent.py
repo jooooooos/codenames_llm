@@ -26,25 +26,43 @@ class LLMAgent:
             self.llm = create_llm(model_config)
         self.role: Optional[str] = None
 
-    def initialize_role(self, role: str, persona_id: Optional[str] = None):
+    def initialize_role(self, role: str, persona_id: Optional[str] = None,
+                       partner_persona_id: Optional[str] = None,
+                       shared_persona: bool = False):
         """
         Set the role for this LLM agent, optionally with a persona.
 
         Args:
             role: Either 'codemaster' or 'guesser'
             persona_id: Optional persona ID (e.g., "1", "2", "3") from personas.json
+            partner_persona_id: Optional persona ID for partner agent
+            shared_persona: If True, include partner's persona in system prompt
         """
         self.role = role
         base_prompt = (CODEMASTER_SYSTEM_PROMPT if role == 'codemaster'
                       else GUESSER_SYSTEM_PROMPT)
 
-        # If persona is provided, prepend it to establish identity first
+        # Build system prompt with optional persona(s)
+        prompt_parts = []
+
+        # 1. Own persona comes FIRST to establish identity
         if persona_id:
             persona_text = get_persona(persona_id)
-            # Persona comes FIRST to establish who the agent is
-            self.system_prompt = f"{persona_text}\n\n{base_prompt}"
-        else:
-            self.system_prompt = base_prompt
+            prompt_parts.append(persona_text)
+
+        # 2. Partner persona comes SECOND (if sharing enabled)
+        if shared_persona and partner_persona_id:
+            partner_text = get_persona(partner_persona_id)
+            partner_role = 'Guesser' if role == 'codemaster' else 'Codemaster'
+            prompt_parts.append(
+                f"Your partner (the {partner_role}) has the following background:\n{partner_text}"
+            )
+
+        # 3. Base role instructions come LAST
+        prompt_parts.append(base_prompt)
+
+        # Combine all parts
+        self.system_prompt = "\n\n".join(prompt_parts)
 
         # Add disable reasoning instruction if configured
         if self.model_config.get("disable_reasoning", False):

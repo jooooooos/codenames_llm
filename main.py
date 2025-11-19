@@ -85,11 +85,17 @@ def main():
     codemaster_persona = None  # Change to "1", "2", etc. to enable persona
     guesser_persona = None     # Change to "1", "2", etc. to enable persona
 
+    # ===== PERSONA SHARING TOGGLE =====
+    # When True: agents know each other's personas and can adapt their communication
+    # When False (default): personas remain isolated, agents unaware of partner's background
+    shared_persona = False  # Change to True to enable persona sharing
+
     try:
         print(f"\n=== Starting Collaborative Codenames ===")
         print(f"Model: {model_configs[model_choice]['model_name']}")
         print(f"Codemaster Persona: {codemaster_persona or 'None (baseline)'}")
         print(f"Guesser Persona: {guesser_persona or 'None (baseline)'}")
+        print(f"Persona Sharing: {'Enabled' if shared_persona else 'Disabled'}")
         print(f"Mode: Codemaster + Guesser vs. Board")
         print(f"Games: 3\n")
 
@@ -101,10 +107,16 @@ def main():
 
         # Create codemaster and guesser agents with optional personas
         codemaster = llm_agent.LLMAgent(model_config=config, llm_instance=shared_llm)
-        codemaster.initialize_role('codemaster', persona_id=codemaster_persona)
+        codemaster.initialize_role('codemaster',
+                                  persona_id=codemaster_persona,
+                                  partner_persona_id=guesser_persona,
+                                  shared_persona=shared_persona)
 
         guesser = llm_agent.LLMAgent(model_config=config, llm_instance=shared_llm)
-        guesser.initialize_role('guesser', persona_id=guesser_persona)
+        guesser.initialize_role('guesser',
+                               persona_id=guesser_persona,
+                               partner_persona_id=codemaster_persona,
+                               shared_persona=shared_persona)
 
         # Run collaborative games
         results = benchmark.run_collab_matchup(

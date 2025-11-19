@@ -169,6 +169,8 @@ class LocalHFLLM(BaseLLM):
             self.model_family = "qwen"
         elif "mistral" in model_lower:
             self.model_family = "mistral"
+        elif "gemma" in model_lower:
+            self.model_family = "gemma"
         else:
             self.model_family = "generic"
 
@@ -229,7 +231,21 @@ class LocalHFLLM(BaseLLM):
                 )
                 return prompt
             except Exception as e:
-                print(f"Warning: Failed to use chat template, falling back to manual formatting: {e}")
+                # Special handling for Gemma: merge system message into first user message
+                if "System role not supported" in str(e):
+                    try:
+                        converted_messages = self._convert_system_to_user(messages)
+                        prompt = self.tokenizer.apply_chat_template(
+                            converted_messages,
+                            tokenize=False,
+                            add_generation_prompt=True
+                        )
+                        return prompt
+                    except Exception as e2:
+                        print(f"Warning: Failed to use chat template after Gemma conversion, falling back to manual formatting: {e2}")
+                else:
+                    # For other exceptions, print warning and fall through to manual formatting
+                    print(f"Warning: Failed to use chat template, falling back to manual formatting: {e}")
 
         # Fallback: Manual formatting for models without chat templates
         prompt = ""
@@ -242,6 +258,31 @@ class LocalHFLLM(BaseLLM):
             elif role == "assistant":
                 prompt += f"Assistant: {content}\n"
         return prompt.strip()
+
+    def _convert_system_to_user(self, messages: List[Dict]) -> List[Dict]:
+        """Convert system message to user message for models that don't support system role (e.g., Gemma)."""
+        converted = []
+        system_content = None
+
+        for msg in messages:
+            if msg["role"] == "system":
+                # Store system message to prepend to first user message
+                system_content = msg["content"]
+            elif msg["role"] == "user":
+                if system_content:
+                    # Prepend system instructions to first user message
+                    converted.append({
+                        "role": "user",
+                        "content": f"{system_content}\n\n{msg['content']}"
+                    })
+                    system_content = None  # Only prepend once
+                else:
+                    converted.append(msg)
+            else:
+                # Keep assistant messages as-is
+                converted.append(msg)
+
+        return converted
 
 # Factory function to create LLM instances
 def create_llm(config: Dict) -> BaseLLM:
