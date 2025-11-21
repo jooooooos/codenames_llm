@@ -1,0 +1,101 @@
+hint_persona_id,guess_persona_id,compatibility_score,reasoning_tag
+1,1,10,Identical Context (Linguist/Linguist)
+1,2,3,Clash: Analytical vs. Spontaneous
+1,3,7,Good: Precision meets Pedagogy
+1,4,9,Excellent: High Logic/Pattern alignment
+1,5,8,High: Structured/Architectural thinking
+1,6,6,Moderate: Semantic vs. Narrative focus
+1,7,7,Good: Nuance meets Nuance
+1,8,4,Low: Abstract/Theory vs. Concrete/Safety
+1,9,8,High: Precision focus
+1,10,2,Clash: Scientific vs. Abstract/Poetic
+2,1,3,Clash: Spontaneous vs. Over-analyzer
+2,2,9,Excellent: Shared "Improv" intuition
+2,3,6,Moderate: Chaos meets Structure
+2,4,4,Low: Intuition vs. Rigorous Logic
+2,5,5,Moderate: Visuals might help Improv
+2,6,8,High: Storytelling alignment
+2,7,7,Good: Social intelligence overlap
+2,8,5,Clash: Risk-taking vs. Safety-first
+2,9,4,Low: Loose associations vs. Medical precision
+2,10,8,High: Creative/Artistic synergy
+3,1,8,High: Clear teacher meets Precise linguist
+3,2,6,Moderate: Teacher manages Chaos
+3,3,10,Identical Context (Teacher/Teacher)
+3,4,7,Good: Structured explanations
+3,5,7,Good: Concrete concepts
+3,6,8,High: Narrative/Educational alignment
+3,7,9,Excellent: High Empathy/Communication
+3,8,8,High: Clear/Direct communication styles
+3,9,7,Good: Professional/Standardized
+3,10,6,Moderate: Concrete vs. Abstract
+4,1,9,Excellent: Logic/Pattern alignment
+4,2,4,Low: Logic vs. Gut feeling
+4,3,7,Good: Explains complex patterns well
+4,4,10,Identical Context (Puzzler/Puzzler)
+4,5,9,Excellent: Structural/Spatial logic
+4,6,5,Moderate: Logic vs. History
+4,7,6,Moderate: Logic vs. Diplomacy
+4,8,7,Good: Risk management alignment
+4,9,8,High: Precision/Problem solving
+4,10,3,Clash: Rigidity vs. Poetic Fluidity
+5,1,8,High: Structural/Systematic thinking
+5,2,5,Moderate: Creative but different mediums
+5,3,7,Good: Clear definitions
+5,4,9,Excellent: Architect + Puzzle Designer
+5,5,10,Identical Context (Architect/Architect)
+5,6,6,Moderate: Spatial vs. Temporal
+5,7,6,Moderate: Structure vs. Soft skills
+5,8,7,Good: Concrete/Physical world focus
+5,9,7,Good: Precision focus
+5,10,5,Moderate: Structure vs. Abstraction
+6,1,6,Moderate: Narrative vs. Semantic
+6,2,8,High: Storytelling synergy
+6,3,8,High: Teacher/Historian alignment
+6,4,5,Moderate: History vs. Logic puzzles
+6,5,6,Moderate: Temporal vs. Spatial
+6,6,10,Identical Context (Historian/Historian)
+6,7,9,Excellent: Cultural/Historical overlap
+6,8,5,Moderate: Narrative vs. Urgent/Direct
+6,9,6,Moderate: Academic overlap
+6,10,8,High: Humanities/Arts synergy
+7,1,7,Good: Nuance analysis
+7,2,7,Good: Social intelligence
+7,3,9,Excellent: Communicator alignment
+7,4,6,Moderate: Soft vs. Hard logic
+7,5,6,Moderate: Diplomat vs. Architect
+7,6,9,Excellent: Cultural context alignment
+7,7,10,Identical Context (Diplomat/Diplomat)
+7,8,5,Moderate: Nuance vs. Directness
+7,9,6,Moderate: Diplomacy vs. Life/Death precision
+7,10,7,Good: Emotional intelligence
+8,1,4,Low: Concrete vs. Abstract Theory
+8,2,5,Clash: Safety vs. Risk
+8,3,8,High: Clear instructions preferred
+8,4,7,Good: Problem solving focus
+8,5,7,Good: Physical world alignment
+8,6,5,Moderate: Action vs. History
+8,7,5,Moderate: Direct vs. Indirect
+8,8,10,Identical Context (Firefighter/Firefighter)
+8,9,9,Excellent: High stakes/Protocol alignment
+8,10,2,Clash: Urgent/Real vs. Abstract/Dreamy
+9,1,8,High: Precision/Systems thinking
+9,2,4,Low: Medical precision vs. Improv
+9,3,7,Good: Professional standards
+9,4,8,High: Diagnostic/Puzzle logic
+9,5,7,Good: Systems thinking
+9,6,6,Moderate: Science vs. Humanities
+9,7,6,Moderate: Protocol vs. Negotiation
+9,8,9,Excellent: Crisis/Protocol synergy
+9,9,10,Identical Context (Doctor/Doctor)
+9,10,3,Clash: Science vs. Art
+10,1,2,Clash: Poetic vs. Computational
+10,2,8,High: Creative association
+10,3,6,Moderate: Abstract vs. Elementary
+10,4,3,Clash: Fluidity vs. Logic grid
+10,5,5,Moderate: Art vs. Engineering
+10,6,8,High: Arts/Humanities alignment
+10,7,7,Good: Emotional resonance
+10,8,2,Clash: Dreamy vs. Urgent
+10,9,3,Clash: Art vs. Science
+10,10,10,Identical Context (Poet/Poet)

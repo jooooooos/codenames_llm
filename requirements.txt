@@ -5,3 +5,4 @@ transformers
 accelerate
 huggingface_hub
 notebook
+sentence-transformers
