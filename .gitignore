@@ -4,3 +4,4 @@ __pycache__/
 .env
 experiment_results/
 game_logs/
+report/
