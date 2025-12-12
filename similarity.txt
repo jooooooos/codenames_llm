@@ -1,0 +1,277 @@
+================================================================================
+PERSONA SIMILARITY VS SUCCESS RATE ANALYSIS
+================================================================================
+Generated: 2025-12-11 17:51:38
+
+This file contains all numerical results and statistics from similarity.ipynb.
+For plots and visualizations, see the figures/ directory.
+================================================================================
+
+Analysis configured for personas 1-5
+Loading logs from: game_logs/tailored_words_to_persona1
+
+=== Games per Persona Pair ===
+Min games per pair: 5
+Max games per pair: 5
+Mean games per pair: 5.00
+
+Sample pairs with counts:
+
+Filtered to 130 games (from 180 total)
+
+=== Aggregated Performance ===
+Persona pairs: 25
+Baseline pairs: 1
+
+Baseline Performance (No Persona):
+  Total games: 5
+  Wins: 2
+  Win rate: 0.400 (40.0%)
+  Avg turns (all): 7.20
+
+Persona Pair Stats:
+  Win Rate: mean=0.272, std=0.199
+  Avg Turns (All): mean=7.56, std=1.78
+  Avg Turns (Wins): mean=10.44, std=1.85
+
+================================================================================
+SECTION 4: METRIC 1 - SEMANTIC EMBEDDING SIMILARITY
+================================================================================
+
+Compute cosine similarity between persona descriptions using sentence embeddings.
+This measures how semantically similar persona descriptions are.
+
+Loaded 20 total personas from file
+Using 5 personas (IDs 1-5) for analysis
+You are Dr. Sarah Kim, a 34-year-old computational linguist specializing in semantic networks and word embeddings. You hold a PhD from MIT and currently work at a tech research lab in San Francisco. Y...
+
+Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+Model loaded successfully
+
+=== Embedding Similarity Statistics ===
+(Cosine similarity of persona description embeddings)
+Sample size: 10 unique persona pairs (off-diagonal)
+Mean similarity: 0.4005
+Std similarity: 0.1150
+Min similarity: 0.2242
+Max similarity: 0.5713
+
+Interpretation: Values closer to 1.0 indicate more semantically similar personas.
+
+================================================================================
+SECTION 5: METRIC 2 - LLM-AS-A-JUDGE COMPATIBILITY SCORES
+================================================================================
+
+Pre-computed compatibility scores (1-10) from LLM evaluation of
+how well each persona pair might collaborate (Theory of Mind / Synergy).
+
+Loaded 100 total compatibility score entries
+Using 25 entries for persona IDs 1-5
+
+Columns: ['hint_persona_id', 'guess_persona_id', 'compatibility_score', 'reasoning_tag']
+
+=== LLM Compatibility Score Statistics ===
+Score range: [3, 10]
+Mean: 7.20
+Std: 2.22
+Median: 7.00
+
+================================================================================
+SECTION 6: MERGED ANALYSIS DATASET
+================================================================================
+
+Created analysis dataset with 25 persona pairs
+Note: Baseline pairs (no persona) are excluded from similarity analysis
+Missing compatibility scores: 0
+
+=== Top 10 Performing Pairs (by Win Rate) ===
+  1. CM 5 -> G 4: 60% win, emb_sim=0.224, compat=9
+  2. CM 2 -> G 1: 60% win, emb_sim=0.503, compat=3
+  3. CM 2 -> G 5: 60% win, emb_sim=0.475, compat=5
+  4. CM 3 -> G 5: 60% win, emb_sim=0.356, compat=7
+  5. CM 4 -> G 1: 40% win, emb_sim=0.257, compat=9
+  6. CM 2 -> G 2: 40% win, emb_sim=1.000, compat=9 [SAME]
+  7. CM 2 -> G 3: 40% win, emb_sim=0.421, compat=6
+  8. CM 2 -> G 4: 40% win, emb_sim=0.429, compat=4
+  9. CM 4 -> G 4: 40% win, emb_sim=1.000, compat=10 [SAME]
+  10. CM 3 -> G 4: 40% win, emb_sim=0.258, compat=7
+
+=== Bottom 10 Performing Pairs (by Win Rate) ===
+  1. CM 3 -> G 3: 20% win, emb_sim=1.000, compat=10 [SAME]
+  2. CM 3 -> G 1: 20% win, emb_sim=0.510, compat=8
+  3. CM 1 -> G 5: 20% win, emb_sim=0.571, compat=8
+  4. CM 1 -> G 4: 20% win, emb_sim=0.257, compat=9
+  5. CM 5 -> G 5: 20% win, emb_sim=1.000, compat=10 [SAME]
+  6. CM 1 -> G 2: 0% win, emb_sim=0.503, compat=3
+  7. CM 3 -> G 2: 0% win, emb_sim=0.421, compat=6
+  8. CM 5 -> G 2: 0% win, emb_sim=0.475, compat=5
+  9. CM 5 -> G 3: 0% win, emb_sim=0.356, compat=7
+  10. CM 1 -> G 3: 0% win, emb_sim=0.510, compat=7
+
+=== Mind Meld Score Matrix ===
+
+=== Mind Meld Score Statistics ===
+(Average cosine similarity between CM reasoning and Guesser reasoning per pair)
+Sample size: 25 persona pairs
+Mean: 0.4971
+Std: 0.0313
+Min: 0.4277
+Max: 0.5561
+
+Interpretation: Higher scores indicate the CM and Guesser think more similarly
+
+=== Efficiency Score Analysis ===
+(Average correct guesses per hint - measures how well Guessers convert hints)
+Computed efficiency for 25 persona pairs
+
+=== Efficiency Statistics ===
+Sample size: 25 pairs
+Mean: 0.3032
+Std: 0.0517
+Min: 0.2055
+Max: 0.3855
+
+Interpretation: Higher values mean better hint-to-correct-guess conversion
+
+================================================================================
+SECTION 7: CORRELATION ANALYSIS - HYPOTHESIS TESTS
+================================================================================
+
+Testing the core hypotheses about persona similarity and game performance.
+Significance levels: *** p<0.001, ** p<0.01, * p<0.05, (n.s.) not significant
+
+============================================================
+Hypothesis 1: Embedding Similarity → Win Rate
+============================================================
+Sample size: 25
+
+Pearson correlation:  r = -0.0733, p = 0.7277 (n.s.)
+Spearman correlation: ρ = -0.1513, p = 0.4702 (n.s.)
+
+Interpretation: Tests if semantically similar personas win more games.
+
+============================================================
+Hypothesis 2: LLM Compatibility → Win Rate
+============================================================
+Sample size: 25
+
+Pearson correlation:  r = +0.0038, p = 0.9857 (n.s.)
+Spearman correlation: ρ = +0.0511, p = 0.8082 (n.s.)
+
+Interpretation: Tests if LLM-predicted compatibility predicts actual wins.
+
+============================================================
+Hypothesis 3: LLM Compatibility → Avg Turns (All Games)
+============================================================
+Sample size: 25
+
+Pearson correlation:  r = -0.1944, p = 0.3518 (n.s.)
+Spearman correlation: ρ = -0.1256, p = 0.5497 (n.s.)
+
+Interpretation: Tests if compatible pairs finish games faster.
+
+============================================================
+Hypothesis 4: LLM Compatibility → Avg Turns (Wins Only)
+============================================================
+Sample size: 20
+
+Pearson correlation:  r = -0.3793, p = 0.0990 (n.s.)
+Spearman correlation: ρ = -0.4615, p = 0.0406 *
+
+Interpretation: Tests if compatible pairs win more efficiently.
+
+============================================================
+Hypothesis 5: Embedding Similarity → Avg Turns (Wins Only)
+============================================================
+Sample size: 20
+
+Pearson correlation:  r = -0.4502, p = 0.0464 *
+Spearman correlation: ρ = -0.3106, p = 0.1826 (n.s.)
+
+Interpretation: Tests if similar personas win more efficiently.
+
+============================================================
+Meta: Embedding Similarity ↔ LLM Compatibility
+============================================================
+Sample size: 25
+
+Pearson correlation:  r = +0.3974, p = 0.0491 *
+Spearman correlation: ρ = +0.2410, p = 0.2458 (n.s.)
+
+Interpretation: Tests how well the two similarity metrics agree.
+
+================================================================================
+CORRELATION SUMMARY TABLE
+================================================================================
+
+               x_col               y_col  n  pearson_r  pearson_p  spearman_r  spearman_p
+embedding_similarity            win_rate 25  -0.073290   0.727723   -0.151339    0.470215
+ compatibility_score            win_rate 25   0.003777   0.985704    0.051131    0.808220
+ compatibility_score       avg_turns_all 25  -0.194401   0.351766   -0.125591    0.549720
+ compatibility_score avg_turns_wins_only 20  -0.379337   0.099037   -0.461454    0.040556
+embedding_similarity avg_turns_wins_only 20  -0.450222   0.046375   -0.310583    0.182605
+embedding_similarity compatibility_score 25   0.397434   0.049145    0.241005    0.245829
+
+
+Key findings summary:
+  - embedding_similarity vs win_rate: No significant correlation
+  - compatibility_score vs win_rate: No significant correlation
+  - compatibility_score vs avg_turns_all: No significant correlation
+  - compatibility_score vs avg_turns_wins_only: No significant correlation
+  - embedding_similarity vs avg_turns_wins_only: SIGNIFICANT negative correlation (r=-0.450, p=0.0464)
+  - embedding_similarity vs compatibility_score: SIGNIFICANT positive correlation (r=0.397, p=0.0491)
+
+================================================================================
+SECTION 9: SAME vs DIFFERENT PERSONA ANALYSIS
+================================================================================
+
+Comparing performance when Codemaster and Guesser share the same persona
+vs. when they have different personas.
+
+Same Persona Pairs (n=5):
+  Win Rate: 0.280 ± 0.110
+  Avg Turns (Wins): 8.90 ± 1.14
+  Embedding Similarity: 1.0000 (by definition = 1.0)
+  LLM Compatibility: 9.80
+
+Different Persona Pairs (n=20):
+  Win Rate: 0.270 ± 0.218
+  Avg Turns (Wins): 10.96 ± 1.77
+  Embedding Similarity: 0.4005
+  LLM Compatibility: 6.55
+
+=== Statistical Test (Independent t-test for Win Rate) ===
+t = 0.098, p = 0.9225 (n.s.)
+
+Interpretation:
+  No significant difference in win rates between same-persona and different-persona pairs.
+
+================================================================================
+SECTION 10: MIND MELD SCORE vs TURN SUCCESS
+================================================================================
+
+Analyzing whether semantic alignment between Codemaster and Guesser
+reasoning correlates with guess success at the individual turn level.
+
+=== Mind Meld Score by Turn Success ===
+
+Successful turns (n=759):
+  Mean: 0.5304
+  Median: 0.5451
+  Std: 0.1520
+
+Unsuccessful turns (n=900):
+  Mean: 0.4709
+  Median: 0.4792
+  Std: 0.1506
+
+=== Statistical Test (Mann-Whitney U) ===
+U = 417689.0, p = 0.0000 ***
+
+Interpretation:
+  Successful turns have significantly higher Mind Meld scores.
+  This suggests reasoning alignment helps predict success.
+
+================================================================================
+END OF SIMILARITY ANALYSIS
+================================================================================

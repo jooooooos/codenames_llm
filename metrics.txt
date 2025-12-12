@@ -1,0 +1,191 @@
+================================================================================
+CLUE UTILIZATION & EARLY TERMINATION RATE ANALYSIS
+================================================================================
+Generated: 2025-12-11 17:51:22
+
+This file contains all numerical results and statistics from metrics.ipynb.
+For plots and visualizations, see the figures/ directory.
+================================================================================
+
+Analysis configured for personas 1-5
+Loading logs from: game_logs/tailored_words_to_persona1
+
+Games shape: (180, 8)
+Turns shape: (1378, 12)
+
+================================================================================
+SECTION 3: CLUE UTILIZATION ANALYSIS
+================================================================================
+
+Definition: Clue utilization = correct guesses / clue number (n)
+This metric measures how effectively the Guesser converts the Codemaster's
+clues into correct guesses. A value of 1.0 means the Guesser correctly
+identified exactly as many words as the Codemaster indicated.
+
+=== Clue Utilization Statistics (Per Turn) ===
+Sample size (n): 1378 turns
+Mean: 0.3140
+Median: 0.2500
+Std: 0.3465
+Min: 0.0000
+Max: 1.5000
+
+Interpretation: On average, Guessers correctly identified 31.4%
+of the words indicated by the Codemaster's clue number.
+
+=== Clue Number Distribution ===
+(How many words Codemasters typically indicate per clue)
+  n=0: 31 turns (2.2%)
+  n=1: 122 turns (8.9%)
+  n=2: 477 turns (34.6%)
+  n=3: 465 turns (33.7%)
+  n=4: 208 turns (15.1%)
+  n=5: 47 turns (3.4%)
+  n=6: 21 turns (1.5%)
+  n=7: 5 turns (0.4%)
+  n=8: 2 turns (0.1%)
+
+=== Clue Utilization by Persona Pair ===
+Aggregated clue utilization for 25 persona pairs
+
+Top 5 pairs by mean clue utilization:
+  CM 5 -> Guesser 4: 0.440 (n=38 turns)
+  CM 3 -> Guesser 3: 0.371 (n=42 turns)
+  CM 4 -> Guesser 4: 0.366 (n=36 turns)
+  CM 3 -> Guesser 4: 0.365 (n=29 turns)
+  CM 2 -> Guesser 4: 0.355 (n=37 turns)
+
+================================================================================
+SECTION 4: EARLY TERMINATION RATE ANALYSIS
+================================================================================
+
+Definition: Proportion of turns where the Guesser yields before exhausting
+allowed guesses (n+1). This metric serves as a proxy for calibrated confidence -
+Guessers who stop early may have better uncertainty estimation.
+
+=== Early Termination Statistics ===
+Total turns: 1378
+Turns ended early: 828
+Early termination rate: 0.6009 (60.1%)
+
+Interpretation: 60.1% of turns ended with the Guesser
+voluntarily stopping before using all allowed guesses.
+
+=== Early Termination by Turn Outcome ===
+(How often Guessers ended early based on what happened)
+  all_correct: 0.0% early termination (0/72 turns)
+  assassin: 57.5% early termination (73/127 turns)
+  neutral: 64.0% early termination (755/1179 turns)
+
+=== Early Termination by Persona Pair ===
+Aggregated early termination for 25 persona pairs
+
+Top 5 pairs by early termination rate:
+  CM 5 -> Guesser 3: 80.0% (20/25 turns)
+  CM 1 -> Guesser 1: 79.5% (35/44 turns)
+  CM 3 -> Guesser 1: 79.5% (35/44 turns)
+  CM 5 -> Guesser 2: 79.2% (38/48 turns)
+  CM 1 -> Guesser 3: 70.8% (17/24 turns)
+
+================================================================================
+SECTION 5: CORRELATION ANALYSIS
+================================================================================
+
+Testing relationships between collaboration metrics and game outcomes.
+
+Games with metrics: 125
+Games with same persona: 25
+Games with different persona: 100
+
+=== Correlation Tests ===
+Significance levels: *** p<0.001, ** p<0.01, * p<0.05, (n.s.) not significant
+
+============================================================
+Clue Utilization → Win
+============================================================
+Sample size: 125
+Pearson:  r = +0.2616, p = 0.0032 **
+Spearman: ρ = +0.3608, p = 0.0000 ***
+
+Interpretation: Tests whether higher clue utilization predicts game wins.
+
+============================================================
+Early Termination Rate → Win
+============================================================
+Sample size: 125
+Pearson:  r = -0.4067, p = 0.0000 ***
+Spearman: ρ = -0.4387, p = 0.0000 ***
+
+Interpretation: Tests whether stopping early (calibrated confidence) predicts wins.
+
+============================================================
+Clue Utilization → Total Turns
+============================================================
+Sample size: 125
+Pearson:  r = -0.1789, p = 0.0459 *
+Spearman: ρ = -0.1974, p = 0.0273 *
+
+Interpretation: Tests whether better clue utilization leads to shorter games.
+
+============================================================
+Early Termination Rate ↔ Clue Utilization
+============================================================
+Sample size: 125
+Pearson:  r = -0.6896, p = 0.0000 ***
+Spearman: ρ = -0.6405, p = 0.0000 ***
+
+Interpretation: Tests the relationship between these two collaboration metrics.
+
+================================================================================
+SAME vs DIFFERENT PERSONA COMPARISON
+================================================================================
+
+Comparing game performance when Codemaster and Guesser share the same
+persona vs. when they have different personas.
+
+Same Persona Games (n=25):
+  Win Rate: 0.280 (28.0%)
+  Clue Utilization: 0.307 ± 0.144
+  Early Term Rate: 0.603 ± 0.256
+
+Different Persona Games (n=100):
+  Win Rate: 0.270 (27.0%)
+  Clue Utilization: 0.329 ± 0.158
+  Early Term Rate: 0.611 ± 0.268
+
+=== Statistical Tests (Independent t-test) ===
+Clue Utilization: t=-0.637, p=0.5253 (n.s.)
+Early Term Rate: t=-0.128, p=0.8983 (n.s.)
+
+Interpretation:
+  - No significant difference in clue utilization between groups.
+
+================================================================================
+SECTION 6: SUMMARY STATISTICS
+================================================================================
+
+=== Summary Statistics by Persona Pair ===
+Total persona pairs: 25
+Same persona pairs: 5
+Different persona pairs: 20
+
+=== Overall Metrics (across all pairs) ===
+Mean Win Rate: 0.272 ± 0.199
+Mean Clue Utilization: 0.325 ± 0.074
+Mean Early Term Rate: 0.609 ± 0.145
+
+=== Top 10 Pairs by Win Rate ===
+  CM 5 -> Guesser 4: 60% win rate (3/5 games)
+  CM 2 -> Guesser 1: 60% win rate (3/5 games)
+  CM 2 -> Guesser 5: 60% win rate (3/5 games)
+  CM 3 -> Guesser 5: 60% win rate (3/5 games)
+  CM 4 -> Guesser 1: 40% win rate (2/5 games)
+  CM 2 -> Guesser 2: 40% win rate (2/5 games) [SAME]
+  CM 2 -> Guesser 3: 40% win rate (2/5 games)
+  CM 2 -> Guesser 4: 40% win rate (2/5 games)
+  CM 4 -> Guesser 4: 40% win rate (2/5 games) [SAME]
+  CM 3 -> Guesser 4: 40% win rate (2/5 games)
+
+================================================================================
+END OF METRICS ANALYSIS
+================================================================================

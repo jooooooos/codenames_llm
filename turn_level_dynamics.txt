@@ -1,0 +1,219 @@
+================================================================================
+TURN-LEVEL DYNAMICS: COGNITIVE ENDURANCE ANALYSIS
+================================================================================
+Generated: 2025-12-11 17:51:11
+
+This file contains all numerical results and statistics from turn_level_dynamics.ipynb.
+For plots and visualizations, see the figures/ directory.
+================================================================================
+
+Analysis configured for personas 1-5
+Loading logs from: game_logs/tailored_words_to_persona1
+Truncating analysis at Turn 10
+
+Turns shape: (921, 12)
+
+================================================================================
+DATA SUMMARY
+================================================================================
+
+=== Cohort Breakdown ===
+  Different Persona: 100 games, 734 turns
+  Same Persona: 25 games, 187 turns
+
+=== Unique Persona Pairs ===
+  Same Persona pairs: 5 (n=5)
+  Different Persona pairs: 20 (n=20)
+
+=== Turn Distribution ===
+  Turn 1: 125 observations
+  Turn 2: 111 observations
+  Turn 3: 105 observations
+  Turn 4: 101 observations
+  Turn 5: 88 observations
+  Turn 6: 83 observations
+  Turn 7: 74 observations
+  Turn 8: 63 observations
+  Turn 9: 54 observations
+  Turn 10: 39 observations
+  Turn 11: 33 observations
+  Turn 12: 21 observations
+  Turn 13: 12 observations
+  Turn 14: 6 observations
+  Turn 15: 3 observations
+  Turn 16: 1 observations
+  Turn 17: 1 observations
+  Turn 18: 1 observations
+
+================================================================================
+TURN-LEVEL CLUE UTILIZATION STATISTICS
+================================================================================
+
+=== Same Persona ===
+  Turn 1: Mean=0.293 ± 0.116 (n=25)
+  Turn 2: Mean=0.399 ± 0.154 (n=24)
+  Turn 3: Mean=0.254 ± 0.141 (n=21)
+  Turn 4: Mean=0.373 ± 0.151 (n=21)
+  Turn 5: Mean=0.342 ± 0.153 (n=19)
+  Turn 6: Mean=0.218 ± 0.104 (n=18)
+  Turn 7: Mean=0.355 ± 0.160 (n=17)
+  Turn 8: Mean=0.321 ± 0.166 (n=14)
+  Turn 9: Mean=0.257 ± 0.218 (n=12)
+  Turn 10: Mean=0.229 ± 0.254 (n=8)
+
+=== Different Persona ===
+  Turn 1: Mean=0.351 ± 0.061 (n=100)
+  Turn 2: Mean=0.361 ± 0.063 (n=87)
+  Turn 3: Mean=0.413 ± 0.080 (n=84)
+  Turn 4: Mean=0.301 ± 0.070 (n=80)
+  Turn 5: Mean=0.344 ± 0.082 (n=69)
+  Turn 6: Mean=0.244 ± 0.072 (n=65)
+  Turn 7: Mean=0.336 ± 0.081 (n=57)
+  Turn 8: Mean=0.216 ± 0.093 (n=49)
+  Turn 9: Mean=0.181 ± 0.084 (n=42)
+  Turn 10: Mean=0.290 ± 0.114 (n=31)
+
+=== Sample Size Check ===
+(Checking if data gets too sparse by Turn 6)
+
+  Different Persona: Minimum n = 31 ✓ Adequate
+  Same Persona: Minimum n = 8 ⚠ Sparse (< 20 samples)
+
+  Sparse turns (n < 20):
+    Same Persona, Turn 5: n = 19
+    Same Persona, Turn 6: n = 18
+    Same Persona, Turn 7: n = 17
+    Same Persona, Turn 8: n = 14
+    Same Persona, Turn 9: n = 12
+    Same Persona, Turn 10: n = 8
+
+================================================================================
+STATISTICAL TESTS: SAME vs DIFFERENT PERSONA BY TURN
+================================================================================
+
+Testing whether Same Persona pairs have significantly higher
+clue utilization than Different Persona pairs at each turn.
+
+Significance levels: *** p<0.001, ** p<0.01, * p<0.05, (n.s.) not significant
+
+Turn 1: Same=0.293 (n=25), Diff=0.351 (n=100)
+         Δ = -0.058 (Diff > Same), t = -0.84, p = 0.4019 (n.s.)
+         Cohen's d = -0.188
+
+Turn 2: Same=0.399 (n=24), Diff=0.361 (n=87)
+         Δ = +0.037 (Same > Diff), t = 0.51, p = 0.6130 (n.s.)
+         Cohen's d = 0.117
+
+Turn 3: Same=0.254 (n=21), Diff=0.413 (n=84)
+         Δ = -0.159 (Diff > Same), t = -1.77, p = 0.0796 (n.s.)
+         Cohen's d = -0.432
+
+Turn 4: Same=0.373 (n=21), Diff=0.301 (n=80)
+         Δ = +0.072 (Same > Diff), t = 0.90, p = 0.3727 (n.s.)
+         Cohen's d = 0.220
+
+Turn 5: Same=0.342 (n=19), Diff=0.344 (n=69)
+         Δ = -0.002 (Diff > Same), t = -0.02, p = 0.9835 (n.s.)
+         Cohen's d = -0.005
+
+Turn 6: Same=0.218 (n=18), Diff=0.244 (n=65)
+         Δ = -0.027 (Diff > Same), t = -0.35, p = 0.7251 (n.s.)
+         Cohen's d = -0.094
+
+Turn 7: Same=0.355 (n=17), Diff=0.336 (n=57)
+         Δ = +0.019 (Same > Diff), t = 0.21, p = 0.8328 (n.s.)
+         Cohen's d = 0.059
+
+Turn 8: Same=0.321 (n=14), Diff=0.216 (n=49)
+         Δ = +0.105 (Same > Diff), t = 1.06, p = 0.2936 (n.s.)
+         Cohen's d = 0.321
+
+Turn 9: Same=0.257 (n=12), Diff=0.181 (n=42)
+         Δ = +0.076 (Same > Diff), t = 0.77, p = 0.4444 (n.s.)
+         Cohen's d = 0.252
+
+Turn 10: Same=0.229 (n=8), Diff=0.290 (n=31)
+         Δ = -0.061 (Diff > Same), t = -0.46, p = 0.6456 (n.s.)
+         Cohen's d = -0.184
+
+
+================================================================================
+MAIN VISUALIZATION SAVED
+================================================================================
+
+Plot saved to: figures/cognitive_endurance_plot.pdf
+
+================================================================================
+DIVERGENCE ANALYSIS: THE LOW-HANGING FRUIT HYPOTHESIS
+================================================================================
+
+=== Trend Analysis (Linear Regression) ===
+Testing whether clue utilization declines over turns.
+
+Same Persona:
+  Slope = -0.0085 (change per turn)
+  R² = 0.1662
+  p-value = 0.2422 (n.s.)
+  → Clue utilization DECREASES by 0.9% per turn
+
+Different Persona:
+  Slope = -0.0169 (change per turn)
+  R² = 0.5041
+  p-value = 0.0214 *
+  → Clue utilization DECREASES by 1.7% per turn
+
+
+=== Phase Analysis: Early Game (Turns 1-2) vs Late Game (Turns 4-6) ===
+
+Comparing performance in early vs late turns by cohort.
+
+Performance by Phase:
+  Different Persona, Early (1-2): Mean = 0.356 ± 0.305 (n=187)
+  Different Persona, Late (4-6): Mean = 0.280 ± 0.320 (n=393)
+  Same Persona, Early (1-2): Mean = 0.345 ± 0.343 (n=49)
+  Same Persona, Late (4-6): Mean = 0.309 ± 0.326 (n=109)
+
+=== Performance Drop (Early → Late) ===
+  Same Persona: 0.345 → 0.309 (Δ = +0.035, +10.3% change)
+  Different Persona: 0.356 → 0.280 (Δ = +0.076, +21.3% change)
+
+=== Robustness Analysis ===
+(Lower variance across turns = more consistent performance)
+
+Same Persona games (n=22):
+  Mean within-game std: 0.311 ± 0.121
+
+Different Persona games (n=85):
+  Mean within-game std: 0.319 ± 0.102
+
+Statistical Test (t-test on within-game std):
+  t = -0.319, p = 0.7506 (n.s.)
+  → No significant difference in consistency
+
+================================================================================
+SUMMARY: COGNITIVE ENDURANCE ANALYSIS
+================================================================================
+
+=== Key Findings ===
+
+1. OVERALL CLUE UTILIZATION:
+   Same Persona: 0.324
+   Different Persona: 0.317
+   Δ = +0.007 (Same > Diff)
+
+2. DEGRADATION OVER TURNS:
+   Same Persona: Turn 1 (0.293) → Turn 10 (0.229), Drop = 0.063
+   Different Persona: Turn 1 (0.351) → Turn 10 (0.290), Drop = 0.060
+
+3. TURNS WITH SIGNIFICANT DIFFERENCES (p < 0.05):
+   No turns showed statistically significant differences.
+
+=== INTERPRETATION ===
+
+'Low-Hanging Fruit' Hypothesis Test:
+✗ NOT SUPPORTED: No significant differences found at any turn.
+  The data does not show a clear divergence pattern between cohorts.
+
+================================================================================
+END OF TURN-LEVEL DYNAMICS ANALYSIS
+================================================================================
